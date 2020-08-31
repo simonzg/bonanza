@@ -1,0 +1,252 @@
+{
+  "Consumer Discretionary": {
+    "Apparel Retail": ["ANF"],
+    "Apparel, Accessories & Luxury Goods": ["LULU", "RL"],
+    "Automobile Manufacturers": ["GM", "RACE", "TSLA"],
+    "Automotive Retail": ["CVNA", "ORLY", "LAD"],
+    "Casinos & Gaming": ["CZR", "WYNN"],
+    "Consumer Electronics": ["ROKU"],
+    "Department Stores": ["M"],
+    "Education Services": ["EDU", "CHGG", "GSX", "TAL"],
+    "Footwear": ["NKE", "DECK"],
+    "General Merchandise Stores": ["TGT"],
+    "Home Furnishings": ["TPX", "LEG", "TPX"],
+    "Homebuilding": ["PHM", "DHI", "BLD", "IBP"],
+    "Homefurnishing Retail": ["RH"],
+    "Hotels, Resorts & Cruise Lines": ["H", "HTHT", "RCL"],
+    "Internet & Direct Marketing Retail": ["BABA", "AMZN", "JD"],
+    "Leisure Facilities": ["PLNT"],
+    "Leisure Products": ["HAS", "ELY"],
+    "Restaurants": ["QSR", "SHAK", "SBUX", "CMG", "YUMC", "MCD"],
+    "Specialty Stores": ["HZO", "TIF"],
+    "Distributors": ["POOL"]
+  },
+
+  "Consumer Staples": {
+    "Brewers": ["SAM", "TAP", "BUD"],
+    "Food Distributors": ["SYY"],
+    "Household Products": ["CLX", "KMB"],
+    "Hypermarkets & Super Centers": ["COST", "WMT"],
+    "Food Retail": ["KR", "SFM", "GO"],
+    "Packaged Foods & Meats": ["BYND", "FRPT", "MDLZ"],
+    "Personal Products": ["EL", "ELF"],
+    "Soft Drinks": ["MNST", "KO"],
+    "Tobacco": ["PM"]
+  },
+
+  "Energy": {
+    "Integrated Oil & Gas": ["BP", "CVX", "SU"],
+    "Oil & Gas Exploration & Production": ["COP"],
+    "Oil & Gas Refining & Marketing": ["MPC", "VLO"]
+  },
+
+  "Financials": {
+    "Asset Management & Custody Banks": ["BLK", "GAIN"],
+    "Consumer Finance": ["AXP", "OMF"],
+    "Diversified Banks": ["BAC", "JPM", "C"],
+    "Financial Exchanges & Data": [
+      "NDAQ",
+      "ICE",
+      "CME",
+      "MSCI",
+      "MORN",
+      "SPGI",
+      "MCO"
+    ],
+    "Insurance Brokers": ["GSHD", "EHTH"],
+    "Investment Banking & Brokerage": ["MS"],
+    "Life & Health Insurance": ["GNW", "PRU", "MET", "AFL"],
+    "Property & Casualty Insurance": ["ALL", "WRB", "PGR"]
+  },
+
+  "Health Care": {
+    "Biotechnology": [
+      "AGIO",
+      "MRNA",
+      "GILD",
+      "UTHR",
+      "APTO",
+      "ARNA",
+      "VRTX",
+      "BIIB",
+      "NVTA",
+      "EXEL",
+      "ABBV",
+      "AMRN",
+      "NBIX",
+      "AVXL",
+      "AMGN",
+      "KRTX",
+      "XLRN",
+      "NTRA"
+    ],
+    "Health Care  Services": ["GH"],
+    "Health Care Equipment": ["BSX", "SYK", "ABT", "EW", "DXCM", "PODD", "MDT"],
+    "Health Care Technology": ["CERN", "VEEV", "EVH", "TDOC", "INSP"],
+    "Life Sciences Tools & Services": ["TECH"],
+    "Managed Health Care": ["CNC", "ANTM", "UNH"],
+    "Pharmaceuticals": [
+      "JNJ",
+      "GSK",
+      "NVS",
+      "MRK",
+      "BMY",
+      "PFE",
+      "INVA",
+      "ELAN"
+    ]
+  },
+
+  "Industrials": {
+    "Aerospace & Defense": ["BA", "RTN", "LHX", "LMT"],
+    "Agricultural & Farm Machinery": ["DE"],
+    "Air Freight & Logistics": ["FDX", "UPS"],
+    "Airlines": ["UAL", "SAVE", "DAL", "JBLU", "LUV"],
+    "Construction & Engineering": ["ACM"],
+    "Construction Machinery & Heavy Trucks": ["CMI"],
+    "Electrical Components & Equipment": ["ABB", "EMR", "VSLR", "RUN"],
+    "Environmental & Facilities Services": ["WM", "CWST", "WCN"],
+    "Heavy Electrical Equipment": ["BE"],
+    "Industrial Machinery": ["AQUA", "MWA"],
+    "Marine": ["CMRE"],
+    "Railroads": ["CSX"],
+    "Research & Consulting Services": ["EFX", "TRU", "TRI"],
+    "Trading Companies & Distributors": ["GATX"]
+  },
+
+  "Information Technology": {
+    "Application Software": [
+      "MIME",
+      "TEAM",
+      "AYX",
+      "FIVN",
+      "WDAY",
+      "ADBE",
+      "ADSK",
+      "PCTY",
+      "JCOM",
+      "DOCU",
+      "CDAY",
+      "EVBG",
+      "AVLR",
+      "HUBS",
+      "COUP",
+      "APPS",
+      "PAYC",
+      "FICO",
+      "PLAN",
+      "SMAR",
+      "BL",
+      "SPLK",
+      "ZEN",
+      "NICE",
+      "TTD",
+      "RNG",
+      "DT",
+      "SMAR",
+      "WDAY",
+      "TTD",
+      "SSNC",
+      "PAYC",
+      "INTU",
+      "ZM"
+    ],
+    "Communications Equipment": ["VIAV", "LITE", "HLIT"],
+    "Data Processing & Outsourced Services": ["SQ", "MA", "FISV", "V"],
+    "IT Consulting & Other Services": ["CTSH"],
+    "Internet Services & Infrastructure": [
+      "FSLY",
+      "SHOP",
+      "MDB",
+      "OKTA",
+      "TWLO",
+      "ENPH",
+      "AKAM"
+    ],
+    "Semiconductor Equipment ": [
+      "MKSI",
+      "AMAT",
+      "KLAC",
+      "LRCX",
+      "ENPH",
+      "SEDG"
+    ],
+    "Semiconductors": [
+      "NXPI",
+      "MCHP",
+      "AMD",
+      "NVDA",
+      "STM",
+      "AVGO",
+      "UMC",
+      "QCOM",
+      "INTC",
+      "FSLR",
+      "SPWR"
+    ],
+    "Systems Software": [
+      "ZUO",
+      "MSFT",
+      "VMW",
+      "SWI",
+      "NOW",
+      "FEYE",
+      "CRWD",
+      "TENB",
+      "VMW"
+    ],
+    "Technology Hardware, Storage & Peripherals": ["AAPL"]
+  },
+
+  "Materials": {
+    "Commodity Chemicals": ["OLN"],
+    "Fertilizers & Agricultural Chemicals": ["FMC"]
+  },
+
+  "Real Estate": {
+    "Health Care REITs ": ["GMRE", "OHI"],
+    "Health Care Supplies": ["WST"],
+    "Industrial REITs": ["DRE", "COLD"],
+    "Real Estate Operating Companies": ["BPY"],
+    "Real Estate Services ": ["RDFN"],
+    "Residential REITs": ["EQR"],
+    "Retail REITs": ["O"],
+    "Specialized REITs": ["EQIX"]
+  },
+
+  "Telecommunication Services": {
+    "Media": ["NXST"],
+    "Integrated Telecommunication Services": ["T"],
+    "Interactive Home Entertainment": [
+      "EA",
+      "GLUU",
+      "ATVI",
+      "ZNGA",
+      "BILI",
+      "NTES"
+    ],
+    "Interactive Media & Services": ["MEET", "TWTR", "Z", "MTCH", "IAC"],
+    "Movies & Entertainment": ["SPOT", "DIS", "NFLX", "IQ"]
+  },
+
+  "Unknown": {
+    "Unknown": [
+      "DT",
+      "INMD",
+      "GOOG",
+      "DDOG",
+      "SDC",
+      "NVST",
+      "NET",
+      "TXG",
+      "LVGO"
+    ]
+  },
+
+  "Utilities": {
+    "Electric Utilities": ["NEE", "DUK", "LNT"],
+    "Multi-Utilities": ["D"],
+    "Renewable Electricity": ["TERP"],
+    "Water Utilities": ["WTRU"]
+  }
+}

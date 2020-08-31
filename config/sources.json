@@ -1,0 +1,41 @@
+{
+  "finnhub": {
+    "raw": "json",
+    "base": "https://finnhub.io/api/v1",
+    "models": {
+      "quote": "/quote?token={token}&symbol={symbol}",
+      "candle": "/stock/candle?token={token}&symbol={symbol}&resolution=D&count=360",
+      "option": "/stock/option-chain?token={token}&symbol={symbol}",
+      "rate": "/stock/upgrade-downgrade?token={token}&symbol={symbol}",
+      "recommend": "/stock/recommendation?token={token}&symbol={symbol}",
+      "day_indicator": "/scan/technical-indicator?token={token}&symbol={symbol}&resolution=D",
+      "week_indicator": "/scan/technical-indicator?token={token}&symbol={symbol}&resolution=W",
+      "month_indicator": "/scan/technical-indicator?token={token}&symbol={symbol}&resolution=M",
+      "price_target": "/stock/price-target?token={token}&symbol={symbol}",
+      "peer": "/stock/peers?token={token}&symbol={symbol}",
+      "earning": "/stock/earnings?token={token}&symbol={symbol}",
+      "profile": "/stock/profile?token={token}&symbol={symbol}"
+    }
+  },
+  "zacks": {
+    "raw": "json",
+    "base": "https://www.zacks.com",
+    "models": {
+      "page": "/stock/quote/{symbol}"
+    }
+  },
+  "tipranks": {
+    "raw": "json",
+    "base": "https://www.tipranks.com/api",
+    "models": {
+      "page": "/stocks/getData/?name={symbol}&benchmark=1&period=3"
+    }
+  },
+  "finviz": {
+    "raw": "json",
+    "base": "https://finviz.com/quote.ashx",
+    "models": {
+      "page": "?t={symbol}"
+    }
+  }
+}
