@@ -1,11 +1,12 @@
 import express from 'express';
 import { Source, toSource } from './const';
+import { PROXY_PORT } from './config';
 import { TaskOption, Task } from './task/task';
 import { FetchTask } from './task/fetchTask';
 import { FinvizFetchTask } from './task/finvizFetchTask';
 
 const app = express();
-const port = 8080; // default port to listen
+const port = PROXY_PORT; // default port to listen
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());

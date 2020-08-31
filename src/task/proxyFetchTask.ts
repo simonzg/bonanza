@@ -1,6 +1,6 @@
 import { Task, TaskOption } from './task';
 import axios from 'axios';
-import { ensureDataDirectory } from '../config';
+import { ensureDataDirectory, PROXY_PORT } from '../config';
 import { writeData } from '../utils';
 
 export class ProxyFetchTask extends Task {
@@ -17,7 +17,7 @@ export class ProxyFetchTask extends Task {
     ensureDataDirectory(this.source, this.model);
     try {
       const res = await axios.post(
-        `http://${this.server}:8080/fetch`,
+        `http://${this.server}:${PROXY_PORT}/fetch`,
         this.options
       );
       if (res.status != 200) {

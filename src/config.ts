@@ -5,6 +5,7 @@ import { Source } from './const';
 
 import * as SOURCES from '../config/sources.json';
 import * as REMOTE_SERVERS from '../config/remote_servers.json';
+export const PROXY_PORT = 8604;
 
 export const getModelNames = (source: Source) => {
   if (Object.keys(SOURCES).includes(Source[source])) {
