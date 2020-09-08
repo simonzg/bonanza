@@ -20,4 +20,8 @@ export class FinvizFetchTask extends FetchTask {
     }
     return JSON.stringify(data, null, 2);
   }
+
+  public toString(): string {
+    return `FinvizFetchTask ${this.name} with ${this.url}`;
+  }
 }

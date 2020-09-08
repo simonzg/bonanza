@@ -16,7 +16,14 @@ export class TaskExecutorOption {
   proxyServers?: string[];
   skipExisting?: boolean;
   extraParams?: { [key: string]: any };
+  batchInterval: number; // interval in ms (used for rate limit)
 }
+
+const sleep = (ms) => {
+  const s = Math.floor((ms / 1000.0) * 100) / 100.0;
+  console.log(`sleep for ${s}s`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 export class TaskExecutor {
   tasks: Task[] = [];
@@ -26,20 +33,24 @@ export class TaskExecutor {
   constructor(options: TaskExecutorOption) {
     this.options = options;
     this.servers = loadRemoteServers();
-    let extraParams: { [key: string]: string } = {};
-    for (const [index, symbol] of options.symbols.entries()) {
+    let index = 0;
+    for (const [i, symbol] of options.symbols.entries()) {
       let taskOption: TaskOption = {
         source: Source[options.source],
         model: options.model,
         symbol,
-        url: '',
+        urlParams: { symbol: symbol },
+        output: true,
       };
       switch (options.action) {
         case Action.clean:
           this.tasks.push(new CleanTask(taskOption));
+          break;
         case Action.show:
           this.tasks.push(new ShowTask(taskOption));
+          break;
         case Action.fetch:
+          // skip existing data
           if (options.skipExisting) {
             const content = readData(
               Source[options.source],
@@ -47,6 +58,11 @@ export class TaskExecutor {
               symbol
             );
             if (content && content.length > 0) {
+              console.log(
+                `skip ${symbol} due to existing ${options.model} data from ${
+                  Source[options.source]
+                }`
+              );
               continue;
             }
           }
@@ -55,12 +71,11 @@ export class TaskExecutor {
           const tokens = this.options.extraParams!.tokens as any[];
           if (options.source === Source.finnhub) {
             const token = tokens[index % tokens.length];
-            extraParams['token'] = token;
+            taskOption.urlParams['token'] = token;
           }
-          taskOption.url = this.getUrl(symbol, extraParams);
 
           // if (!this.options.remoteFetch) {
-          if (false) {
+          if (!this.options.proxyFetch) {
             switch (options.source) {
               case Source.finviz:
                 this.tasks.push(new FinvizFetchTask(taskOption));
@@ -77,43 +92,58 @@ export class TaskExecutor {
             );
           }
       }
+      index++;
     }
   }
 
-  public async executeInSequence() {
-    for (const task of this.tasks) {
-      console.log(task.toString());
+  public async executeAll() {
+    if (this.options.proxyFetch) {
+      await this.executeAsync();
+    } else {
+      await this.executeInSequence();
     }
+  }
+
+  private async executeInSequence() {
+    console.log(`Execute ${this.tasks.length} in sequence`);
 
     for (const task of this.tasks) {
       await task.execute();
     }
   }
 
-  public async executeAsync() {
+  private async executeAsync() {
+    console.log(`Execute ${this.tasks.length} asynchronously`);
     let promises: Promise<void>[] = [];
-    let batchSize = 10;
+    let batchSize = this.servers.length;
     let i = 0;
-    for (const task of this.tasks) {
-      if (i < batchSize) {
+    let start: number, end: number;
+    while (this.tasks && this.tasks.length > 0) {
+      if (promises.length === 0) {
+        start = new Date().getTime();
+      }
+      const task = this.tasks.shift();
+      if (task) {
         promises.push(task.execute());
       } else {
+        console.log(`waiting for ${promises.length} tasks ...`);
+        await Promise.all(promises);
+        break;
+      }
+
+      i++;
+      if (i === batchSize) {
+        console.log(`waiting for ${promises.length} tasks ...`);
         await Promise.all(promises);
         i = 0;
         promises = [];
+        end = new Date().getTime();
+        const msUsed = end - start;
+        const delta = this.options.batchInterval - msUsed;
+        if (delta > 0) {
+          await sleep(delta);
+        }
       }
     }
-  }
-
-  private getUrl(symbol: string, extraParams: { [key: string]: string }) {
-    let urlPattern = getUrlPattern(this.options.source, this.options.model);
-    let url = urlPattern.replace('{symbol}', symbol);
-    if (this.options && this.options.extraParams) {
-      for (const key of Object.keys(extraParams)) {
-        const val = extraParams[key];
-        url = url.replace(`{${key}}`, val.toString());
-      }
-    }
-    return url;
   }
 }

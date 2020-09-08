@@ -3,7 +3,7 @@ import { deleteData } from '../utils';
 
 export class CleanTask extends Task {
   async execute() {
-    console.log(`exec clean: ${this.name}`);
+    console.log(`Exec clean: ${this.name}`);
     deleteData(this.source, this.model, this.symbol);
   }
 }

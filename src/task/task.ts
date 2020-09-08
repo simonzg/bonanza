@@ -2,7 +2,8 @@ export class TaskOption {
   source: string;
   model: string;
   symbol: string;
-  url: string;
+  urlParams?: { [key: string]: string };
+  output: boolean;
 }
 
 export abstract class Task {
@@ -10,6 +11,7 @@ export abstract class Task {
   protected model: string;
   protected symbol: string;
   protected options: TaskOption;
+  protected urlParams: { [key: string]: string };
   protected url: string;
   protected name: string;
 
@@ -17,14 +19,19 @@ export abstract class Task {
     this.source = options.source;
     this.model = options.model;
     this.symbol = options.symbol;
-    this.url = options.url;
     this.options = options;
+    this.urlParams = { symbol: options.symbol };
+    if (options.urlParams) {
+      for (const key in options.urlParams) {
+        this.urlParams[key] = options.urlParams[key];
+      }
+    }
     this.name = `${options.source}.${options.model}.${options.symbol}`;
   }
 
-  toString(): string {
-    return `${this.name} with ${this.url}`;
+  public toString(): string {
+    return `Task ${this.name}`;
   }
 
-  async execute(): Promise<any> {}
+  abstract async execute(): Promise<any>;
 }

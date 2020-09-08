@@ -1,18 +1,22 @@
 import { Task, TaskOption } from './task';
+import { Source } from '../const';
 import axios from 'axios';
 import { ensureDataDirectory } from '../config';
 import { writeData } from '../utils';
-
+import { getUrlPattern } from '../config';
 export class FetchTask extends Task {
-  private urlPattern = '';
   private data = '';
 
-  constructor(options: TaskOption) {
+  constructor(options: TaskOption, url?: string) {
     super(options);
+    this.url = this.getUrl();
+    if (url) {
+      this.url = url;
+    }
   }
 
   async execute() {
-    console.log(`exec fetch: ${this.name}`);
+    console.log(`Exec fetch: ${this.name} with ${this.url}`);
     ensureDataDirectory(this.source, this.model);
     try {
       const res = await axios.get(this.url);
@@ -34,5 +38,20 @@ export class FetchTask extends Task {
       return JSON.stringify(raw, null, 2);
     }
     return (raw as Object).toString();
+  }
+
+  private getUrl() {
+    let url = getUrlPattern(Source[this.source], this.model);
+    if (this.urlParams && Object.keys(this.urlParams).length > 0) {
+      for (const key of Object.keys(this.urlParams)) {
+        const val = this.urlParams[key];
+        url = url.replace(`{${key}}`, val.toString());
+      }
+    }
+    return url;
+  }
+
+  public toString(): string {
+    return `FetchTask ${this.name} with ${this.url}`;
   }
 }
