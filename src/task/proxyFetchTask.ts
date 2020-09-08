@@ -39,7 +39,11 @@ export class ProxyFetchTask extends Task {
       writeData(this.source, this.model, this.symbol, this.data);
       return this.data;
     } catch (e) {
-      console.log('Error Happened (but ignored): ', e);
+      console.log('-'.repeat(80));
+      console.log('Error Happened (but ignored): ', e.name, e.message);
+      console.log('code:', e.code, 'stack:', e.stack);
+      console.log(e.config.method, e.config.url, ' with data:', e.config.data);
+      console.log('-'.repeat(80));
     }
   }
 
