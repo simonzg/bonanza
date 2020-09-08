@@ -1,11 +1,6 @@
 import inquirer from 'inquirer';
 import { getModelNames, loadFinnhubAccounts } from './config';
 import { loadSymbolsByListing } from './listing';
-import { FetchTask } from './task/fetchTask';
-import { CleanTask } from './task/cleanTask';
-import { ShowTask } from './task/showTask';
-import { TaskOption } from './task/task';
-import { FinvizFetchTask } from './task/finvizFetchTask';
 import { TaskExecutor, TaskExecutorOption } from './task/taskExecutor';
 import {
   Listing,
@@ -65,38 +60,67 @@ import {
   let symbols: string[];
   if (listing === Listing.Others) {
     answers = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'symbols',
-        message: 'What symbols do you need?',
-      },
+      { type: 'input', name: 'symbols', message: 'What symbols do you need?' },
     ]);
     symbols = answers.symbols.split(',');
   } else {
     symbols = await loadSymbolsByListing(listing);
+  }
+
+  let proxyFetch = false;
+  let skipExisting = true;
+  if (action === Action.fetch) {
+    answers = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'skip',
+        message: 'Do you want to skip existing data?',
+      },
+    ]);
+    skipExisting = answers.skip;
+
+    answers = await inquirer.prompt([
+      { type: 'confirm', name: 'proxy', message: 'Do you want to use proxy?' },
+    ]);
+    proxyFetch = answers.proxy;
   }
   console.log({
     action,
     source,
     models,
     symbolCount: symbols.length,
+    proxyFetch,
+    skipExisting,
   });
+  await runCmd(action, source, models, symbols, proxyFetch, skipExisting);
+})();
 
+const runCmd = async (
+  action: Action,
+  source: Source,
+  models: string[],
+  symbols: string[],
+  proxyFetch: boolean,
+  skipExisting: boolean
+) => {
   for (const model of models) {
     let options: TaskExecutorOption = {
       action,
       source,
       model,
       symbols,
-      skipExisting: false,
+      proxyFetch,
+      skipExisting,
       extraParams: {},
+      batchInterval: 3000,
     };
     if (action === Action.fetch && source === Source.finnhub) {
       const accts = await loadFinnhubAccounts();
       const tokens = accts.map((acct) => acct.Token);
       options.extraParams['tokens'] = tokens;
     }
+
     let executor = new TaskExecutor(options);
-    await executor.executeInSequence();
+    await executor.executeAll();
   }
-})();
+};

@@ -3,9 +3,13 @@ import * as path from 'path';
 import { getDataPath } from './config';
 
 export const readData = (source: string, model: string, symbol: string) => {
-  const filepath = getDataPath(source, model, symbol);
-  const content = fs.readFileSync(filepath);
-  return content.toString('utf-8');
+  try {
+    const filepath = getDataPath(source, model, symbol);
+    const content = fs.readFileSync(filepath);
+    return content.toString('utf-8');
+  } catch (e) {
+    return undefined;
+  }
 };
 
 export const deleteData = (source: string, model: string, symbol: string) => {

@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // define a route handler for the default home page
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/hello', (req: express.Request, res: express.Response) => {
   res.send('Hello world!');
 });
 
@@ -22,20 +22,25 @@ app.post('/fetch', async (req: express.Request, res: express.Response) => {
   if (
     !keys.includes('source') ||
     !keys.includes('model') ||
-    !keys.includes('model') ||
+    !keys.includes('symbol') ||
     !keys.includes('url')
   ) {
     return res.json({ error: 'incomplete query' });
   }
   const source = toSource(req.body.source);
-  const taskOption: TaskOption = req.body;
+  const taskOption: TaskOption = {
+    source: req.body.source,
+    model: req.body.model,
+    symbol: req.body.symbol,
+    output: false,
+  };
   let task: Task;
   switch (source) {
     case Source.finviz:
-      task = new FinvizFetchTask(taskOption);
+      task = new FinvizFetchTask(taskOption, req.body.url);
       break;
     default:
-      task = new FetchTask(taskOption);
+      task = new FetchTask(taskOption, req.body.url);
   }
 
   const result = await task.execute();
