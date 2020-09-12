@@ -54,3 +54,15 @@ export const loadSymbolsByListing = async (ex: Listing): Promise<string[]> => {
       return await loadListingFromFile('sp500.csv', 'Ticker');
   }
 };
+
+export const loadAllSymbols = async () => {
+  const nasdaqSymbols = await loadSymbolsByListing(Listing.Nasdaq);
+  const sp500Symbols = await loadSymbolsByListing(Listing.SP500);
+  const myOwnSymbols = await loadSymbolsByListing(Listing.Myown);
+  const amexSymbols = await loadSymbolsByListing(Listing.Amex);
+  const symbolsSet = new Set(
+    nasdaqSymbols.concat(sp500Symbols).concat(myOwnSymbols).concat(amexSymbols)
+  );
+  const symbols = [...symbolsSet];
+  return symbols;
+};
