@@ -3,6 +3,7 @@ import { getModelNames, loadFinnhubAccounts } from './config';
 import { loadSymbolsByListing, loadAllSymbols } from './listing';
 import { TaskExecutor, TaskExecutorOption } from './task/taskExecutor';
 import { Listing, Action, Source } from './const';
+import { writeAnalysisResult } from './analyze/filter';
 
 (async () => {
   const symbols = await loadAllSymbols();
@@ -19,6 +20,9 @@ import { Listing, Action, Source } from './const';
   //   false
   // );
 
+  console.log('count: ', symbols.length);
+  writeAnalysisResult('symbols.json', JSON.stringify(symbols, null, 2));
+  /*
   // // get finnhub day data
   await runCmd(
     Action.fetch,
@@ -51,6 +55,7 @@ import { Listing, Action, Source } from './const';
 
   // get tipranks data
   await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
+  */
 })();
 
 const runCmd = async (
