@@ -23,7 +23,14 @@ import { Listing, Action, Source } from './const';
   await runCmd(
     Action.fetch,
     Source.finnhub,
-    ['candle', 'day_indicator', 'day_pattern'],
+    [
+      'candle',
+      'day_indicator',
+      'price_target',
+      'recommend',
+      'week_indicator',
+      'day_pattern',
+    ],
     symbols,
     true,
     false
@@ -43,7 +50,7 @@ import { Listing, Action, Source } from './const';
   await runCmd(Action.fetch, Source.finviz, ['page'], symbols, true, false);
 
   // get tipranks data
-  // await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
+  await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
 })();
 
 const runCmd = async (
