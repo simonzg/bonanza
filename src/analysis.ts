@@ -1,21 +1,12 @@
 import { readData } from './utils';
 import { loadAllSymbols } from './listing';
-import { FinvizFilter } from './analyze/finvizFilter';
+import { FinvizFilter, FinvizRule } from './analyze/finvizFilter';
 import { FinnhubFilter } from './analyze/finnhubFilter';
 import {
   FilterResult,
   writeAnalysisResult,
   writeCSVResult,
 } from './analyze/filter';
-
-const daysOfYear = () => {
-  const now = new Date().getTime();
-  const start = new Date(new Date().getFullYear(), 0, 0).getTime();
-  var diff = now - start;
-  var oneDay = 1000 * 60 * 60 * 24;
-  var day = Math.floor(diff / oneDay);
-  return day;
-};
 
 const writeRejectedData = (filename: string, results: FilterResult[]) => {
   let data = 'Symbol,Reject Reason\n';
@@ -183,7 +174,14 @@ const getIndustry = (symbol) => {
 };
 
 (async () => {
-  const fzFilter = new FinvizFilter();
+  const rules = [
+    new FinvizRule('eps next 5y > 5%'),
+    new FinvizRule('market cap > 100m'),
+    new FinvizRule('sma200 > 5%'),
+    new FinvizRule('roe > 5%'),
+    new FinvizRule('short float < 10%'),
+  ];
+  const fzFilter = new FinvizFilter(rules);
   const fhFilter = new FinnhubFilter();
 
   const symbols = await loadAllSymbols();

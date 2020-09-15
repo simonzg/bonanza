@@ -83,13 +83,11 @@ export class FinvizRule {
 }
 
 export class FinvizFilter extends Filter {
-  rules = [
-    new FinvizRule('eps next 5y > 5%'),
-    new FinvizRule('market cap > 100m'),
-    new FinvizRule('sma200 > 5%'),
-    new FinvizRule('roe > 5%'),
-    new FinvizRule('short float < 10%'),
-  ];
+  rules: FinvizRule[];
+  constructor(rules: FinvizRule[]) {
+    super();
+    this.rules = rules;
+  }
 
   match(symbol: string): FilterResult {
     const fvData = readData('finviz', 'page', symbol);
