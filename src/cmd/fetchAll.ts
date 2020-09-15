@@ -20,9 +20,6 @@ import { writeAnalysisResult } from '../analyze/filter';
   //   false
   // );
 
-  console.log('count: ', symbols.length);
-  writeAnalysisResult('symbols.json', JSON.stringify(symbols, null, 2));
-  /*
   // // get finnhub day data
   await runCmd(
     Action.fetch,
@@ -55,7 +52,6 @@ import { writeAnalysisResult } from '../analyze/filter';
 
   // get tipranks data
   await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
-  */
 })();
 
 const runCmd = async (
