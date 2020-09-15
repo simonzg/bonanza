@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node src/main.ts",
     "fetchall": "ts-node src/fetchAll.ts",
+    "analyze": "ts-node src/analysis.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,6 +23,7 @@
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
+    "csv-writer": "^1.6.0",
     "express": "^4.17.1",
     "papaparse": "^5.2.0"
   }
