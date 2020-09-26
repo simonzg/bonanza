@@ -10,42 +10,28 @@ import { writeAnalysisResult } from '../analyze/filter';
   console.log({
     symbolCount: symbols.length,
   });
-  // // get finnhub one-time fact
-  // await runCmd(
-  //   Action.fetch,
-  //   Source.finnhub,
-  //   ['profile', 'peer'],
-  //   symbols,
-  //   true,
-  //   false
-  // );
-
-  // // get finnhub day data
+  // get finnhub one-time fact
   await runCmd(
     Action.fetch,
     Source.finnhub,
-    [
-      'candle',
-      'day_indicator',
-      'price_target',
-      'recommend',
-      'week_indicator',
-      'day_pattern',
-    ],
+    ['profile', 'peer'],
     symbols,
     true,
     false
   );
 
-  // // get finnhub week data
-  // await runCmd(
-  //   Action.fetch,
-  //   Source.finnhub,
-  //   ['price_target', 'recommend', 'week_indicator'],
-  //   symbols,
-  //   true,
-  //   false
-  // );
+  // get finnhub day data
+  // await runCmd(Action.fetch, Source.finnhub, ['profile'], symbols, true, false);
+
+  // get finnhub week data
+  await runCmd(
+    Action.fetch,
+    Source.finnhub,
+    ['price_target', 'recommend', 'week_indicator'],
+    symbols,
+    true,
+    false
+  );
 
   // get finviz data
   await runCmd(Action.fetch, Source.finviz, ['page'], symbols, true, false);
