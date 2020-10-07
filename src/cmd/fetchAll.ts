@@ -4,6 +4,36 @@ import { loadAllSymbols } from '../listing';
 import { TaskExecutor, TaskExecutorOption } from '../task/taskExecutor';
 import { Listing, Action, Source } from '../const';
 
+const runCmd = async (
+  action: Action,
+  source: Source,
+  models: string[],
+  symbols: string[],
+  proxyFetch: boolean,
+  skipExisting: boolean
+) => {
+  for (const model of models) {
+    let options: TaskExecutorOption = {
+      action,
+      source,
+      model,
+      symbols,
+      proxyFetch,
+      skipExisting,
+      extraParams: {},
+      batchInterval: 3000,
+    };
+    if (action === Action.fetch && source === Source.finnhub) {
+      const accts = await loadFinnhubAccounts();
+      const tokens = accts.map((acct) => acct.Token);
+      options.extraParams['tokens'] = tokens;
+    }
+
+    let executor = new TaskExecutor(options);
+    await executor.executeAll();
+  }
+};
+
 (async () => {
   const symbols = loadAllSymbols();
   console.log({
@@ -38,33 +68,3 @@ import { Listing, Action, Source } from '../const';
   // get tipranks data
   await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
 })();
-
-const runCmd = async (
-  action: Action,
-  source: Source,
-  models: string[],
-  symbols: string[],
-  proxyFetch: boolean,
-  skipExisting: boolean
-) => {
-  for (const model of models) {
-    let options: TaskExecutorOption = {
-      action,
-      source,
-      model,
-      symbols,
-      proxyFetch,
-      skipExisting,
-      extraParams: {},
-      batchInterval: 3000,
-    };
-    if (action === Action.fetch && source === Source.finnhub) {
-      const accts = await loadFinnhubAccounts();
-      const tokens = accts.map((acct) => acct.Token);
-      options.extraParams['tokens'] = tokens;
-    }
-
-    let executor = new TaskExecutor(options);
-    await executor.executeAll();
-  }
-};
