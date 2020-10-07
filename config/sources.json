@@ -14,7 +14,11 @@
       "peer": "/stock/peers?token={token}&symbol={symbol}",
       "earning": "/stock/earnings?token={token}&symbol={symbol}",
       "profile": "/stock/profile2?token={token}&symbol={symbol}",
-      "earning_calendar": "/calendar/earnings?token={token}&from=2020-03-12&to=2020-03-15"
+      "earning_calendar": "/calendar/earnings?token={token}&from=2020-03-12&to=2020-03-15",
+
+      "sp500": "/index/constituents?token={token}&symbol=^GSPC",
+      "nasdaq": "/index/constituents?token={token}&symbol=^NDX",
+      "dowjones": "/index/constituents?token={token}&symbol=^DJI"
     }
   },
   "zacks": {
