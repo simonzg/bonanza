@@ -1,12 +1,11 @@
 import inquirer from 'inquirer';
-import { getModelNames, loadFinnhubAccounts } from '../config';
-import { loadSymbolsByListing, loadAllSymbols } from '../listing';
+import { loadFinnhubAccounts } from '../config';
+import { loadAllSymbols } from '../listing';
 import { TaskExecutor, TaskExecutorOption } from '../task/taskExecutor';
 import { Listing, Action, Source } from '../const';
-import { writeAnalysisResult } from '../analyze/filter';
 
 (async () => {
-  const symbols = await loadAllSymbols();
+  const symbols = loadAllSymbols();
   console.log({
     symbolCount: symbols.length,
   });
