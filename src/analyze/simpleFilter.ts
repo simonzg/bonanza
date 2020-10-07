@@ -1,7 +1,7 @@
 import { Filter, FilterResult } from './filter';
 import { readData } from '../utils';
 
-export class FinvizRule {
+export class FilterRule {
   field: string;
   op: string;
   target: string;
@@ -17,7 +17,7 @@ export class FinvizRule {
     this.value = '';
   }
 
-  public match(data: object): boolean {
+  public match(data: any): boolean {
     if (!Object.keys(data).includes(this.field)) {
       return false;
     }
@@ -36,23 +36,38 @@ export class FinvizRule {
       let valNum: number, tgtNum: number;
       if (value === '-') {
         // shortcut
-        return true;
+        valNum = 0;
       }
       const valUnit = value[value.length - 1];
       const tgtUnit = target[target.length - 1];
-      if (['b', 'm', '%'].includes(valUnit)) {
+      if (['b', 'm', 'k', '%'].includes(valUnit)) {
         valNum = Number(value.slice(0, value.length - 1));
+      } else {
+        valNum = Number(value);
       }
-      if (['b', 'm', '%'].includes(tgtUnit)) {
+      if (['b', 'm', 'k', '%'].includes(tgtUnit)) {
         tgtNum = Number(target.slice(0, target.length - 1));
+      } else {
+        tgtNum = Number(target);
       }
-      if (valUnit === 'b') {
-        valNum *= 1000;
+      switch (valUnit) {
+        case 'b':
+          valNum *= 1e9;
+        case 'm':
+          valNum *= 1e6;
+        case 'k':
+          valNum *= 1e3;
       }
-      if (tgtUnit === 'b') {
-        tgtNum *= 1000;
+      switch (tgtUnit) {
+        case 'b':
+          tgtNum *= 1e9;
+        case 'm':
+          tgtNum *= 1e6;
+        case 'k':
+          tgtNum *= 1e3;
       }
       let result = false;
+
       switch (this.op) {
         case '<':
           result = valNum < tgtNum;
@@ -70,7 +85,7 @@ export class FinvizRule {
           result = valNum >= tgtNum;
           break;
       }
-      // console.log('result = ', result);
+
       return result;
     } catch (e) {
       return false;
@@ -82,26 +97,26 @@ export class FinvizRule {
   }
 }
 
-export class FinvizFilter extends Filter {
-  rules: FinvizRule[];
-  constructor(rules: FinvizRule[]) {
+export class SimpleFilter extends Filter {
+  rules: FilterRule[];
+  constructor(rules: FilterRule[]) {
     super();
     this.rules = rules;
   }
 
-  match(symbol: string): FilterResult {
-    const fvData = readData('finviz', 'page', symbol);
-    if (!fvData) {
+  match(data: any): FilterResult {
+    if (!data || !data.symbol) {
       return {
+        symbol: data.symbol,
         accepted: false,
         rejectReason: 'missing data for analysis',
       } as FilterResult;
     }
     // console.log(symbol);
     for (const rule of this.rules) {
-      if (!rule.match(JSON.parse(fvData))) {
+      if (!rule.match(data)) {
         return {
-          symbol,
+          symbol: data.symbol,
           accepted: false,
           rejectReason: `not matching rule: ${rule.toString()}, actual value: ${
             rule.value
@@ -109,6 +124,6 @@ export class FinvizFilter extends Filter {
         };
       }
     }
-    return { symbol, accepted: true, rejectReason: '' };
+    return { symbol: data.symbol, accepted: true, rejectReason: '' };
   }
 }
