@@ -2,9 +2,11 @@ import { FilterRule } from '../analyze/simpleFilter';
 import { writeAnalysisJSON, writeAnalysisCSV } from '../utils';
 import { loadMergedData } from '../analyze/dataMerger';
 import { SimpleFilter } from '../analyze/simpleFilter';
+import { loadAllSymbols } from '../listing';
 
 (async () => {
-  const rawMerged = loadMergedData();
+  const symbols = loadAllSymbols();
+  const rawMerged = loadMergedData(symbols);
   writeAnalysisJSON('raw-merged.json', rawMerged);
   const rules = [
     new FilterRule('upMedian > 0%'), // upMedian > 0%

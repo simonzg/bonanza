@@ -10,13 +10,13 @@ import { loadMergedData } from '../analyze/dataMerger';
 
 (async () => {
   const rules = [
-    new FilterRule('eps next 5y > 0%'),
-    new FilterRule('market cap >= 100m'),
+    new FilterRule('eps next 5y >= 0%'),
+    new FilterRule('market cap >= 30m'),
   ];
   const filter = new SimpleFilter(rules);
 
-  const symbols = loadAllSymbols();
-  const rawMerged = loadMergedData();
+  const symbols = loadAllSymbols(false);
+  const rawMerged = loadMergedData(symbols);
   const ignored = {};
 
   const visitedSymbols = {};

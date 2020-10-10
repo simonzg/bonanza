@@ -5,8 +5,7 @@ const formatPercent = (num: number): string => {
   return `${Math.floor(10000 * num) / 100}%`;
 };
 
-export const loadMergedData = () => {
-  const symbols = loadAllSymbols();
+export const loadMergedData = (symbols: string[]) => {
   const result = [];
   const visited = {};
   const EMA = require('technicalindicators').EMA;
@@ -47,6 +46,9 @@ export const loadMergedData = () => {
       const candle = JSON.parse(candleData);
       const priceTarget = JSON.parse(priceTargetData);
 
+      if (candle.c === undefined || priceTarget.targetHigh === undefined) {
+        continue;
+      }
       // close price of last day
       const closePrice = candle.c[candle.c.length - 1];
 
@@ -95,7 +97,7 @@ export const loadMergedData = () => {
       const ema60 = ema60Series[ema60Series.length - 1];
       const ema120Series = EMA.calculate({ period: 120, values: candle.c });
       const ema120 = ema120Series[ema120Series.length - 1];
-      const sp500Rate = -0.014;
+      const sp500Rate = 0.0174;
       let relativeStrength = (rate1d - sp500Rate) / sp500Rate;
       if (sp500Rate < 0) {
         relativeStrength *= -1;

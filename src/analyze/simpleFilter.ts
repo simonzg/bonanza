@@ -34,14 +34,12 @@ export class FilterRule {
 
     try {
       let valNum: number, tgtNum: number;
-      if (value === '-') {
-        // shortcut
-        valNum = 0;
-      }
       const valUnit = value[value.length - 1];
       const tgtUnit = target[target.length - 1];
       if (['b', 'm', 'k', '%'].includes(valUnit)) {
         valNum = Number(value.slice(0, value.length - 1));
+      } else if (value === '-') {
+        valNum = 0;
       } else {
         valNum = Number(value);
       }

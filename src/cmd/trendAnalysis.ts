@@ -1,9 +1,11 @@
 import { writeAnalysisCSV } from '../utils';
 import { FilterRule, SimpleFilter } from '../analyze/simpleFilter';
 import { loadMergedData } from '../analyze/dataMerger';
+import { loadAllSymbols } from '../listing';
 
 (async () => {
-  const rawMerged = loadMergedData();
+  const symbols = loadAllSymbols();
+  const rawMerged = loadMergedData(symbols);
 
   const rules = [
     new FilterRule('relativeStrength > 0%'),

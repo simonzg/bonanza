@@ -37,13 +37,17 @@ export const loadSymbolsByListing = (ex: Listing): string[] => {
       break;
   }
   const ignoredSymbols = new Set(Object.keys(ignored));
-  console.log(`${ex}: Loaded ${symbols.length} symbols`);
-  return symbols.filter((sym) => {
+  const filtered = symbols.filter((sym) => {
     return !ignoredSymbols.has(sym);
   });
+
+  console.log(
+    `${ex}: Loaded ${filtered.length} symbols (total: ${symbols.length}, ignored: ${ignoredSymbols.size})`
+  );
+  return filtered;
 };
 
-export const loadAllSymbols = () => {
+export const loadAllSymbols = (filter = true) => {
   const nasdaqSymbols = nasdaq.symbols;
   const nyseSymbols = nyse.symbols;
   const myOwnSymbols = loadMyOwnListing();
@@ -56,5 +60,20 @@ export const loadAllSymbols = () => {
       .concat(sp500.constituents)
   );
   const symbols = [...symbolsSet];
-  return symbols;
+
+  console.log('filter = ', filter);
+  if (filter) {
+    const ignoredSymbols = new Set(Object.keys(ignored));
+    const filtered = symbols.filter((sym) => {
+      return !ignoredSymbols.has(sym);
+    });
+
+    console.log(
+      `Loaded ${filtered.length} symbols (total: ${symbols.length}, ignored: ${ignoredSymbols.size})`
+    );
+    return filtered;
+  } else {
+    console.log(`Loaded ${symbols.length} symbols`);
+    return symbols;
+  }
 };
