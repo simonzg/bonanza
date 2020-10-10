@@ -40,23 +40,23 @@ const runCmd = async (
     symbolCount: symbols.length,
   });
   // get finnhub one-time fact
+  // await runCmd( Action.fetch, Source.finnhub, ['profile', 'peer'], symbols, true, false);
+
+  // get finnhub day data
   await runCmd(
     Action.fetch,
     Source.finnhub,
-    ['profile', 'peer'],
+    ['candle', 'price_target', 'recommend', 'day_indicator'],
     symbols,
     true,
     false
   );
 
-  // get finnhub day data
-  // await runCmd(Action.fetch, Source.finnhub, ['profile'], symbols, true, false);
-
   // get finnhub week data
   await runCmd(
     Action.fetch,
     Source.finnhub,
-    ['price_target', 'recommend', 'week_indicator'],
+    ['week_indicator'],
     symbols,
     true,
     false
