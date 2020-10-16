@@ -1,12 +1,7 @@
 import { writeAnalysisCSV } from '../utils';
-import { FilterRule, SimpleFilter } from '../analyze/simpleFilter';
-import { loadMergedData } from '../analyze/dataMerger';
-import { loadAllSymbols } from '../listing';
+import { FilterRule, SimpleFilter } from './simpleFilter';
 
-(async () => {
-  const symbols = loadAllSymbols();
-  const rawMerged = loadMergedData(symbols);
-
+export const strengthScreen = async (rawMerged: any[]) => {
   const rules = [
     new FilterRule('relativeStrength > 0%'),
     new FilterRule('shortTrend > 0%'),
@@ -47,6 +42,8 @@ import { loadAllSymbols } from '../listing';
 
     { id: 'upMedian', title: 'up%' },
     { id: 'upHigh', title: 'uphigh%' },
+    { id: 'sales q/q', title: 'sales q/q' },
+    { id: 'eps q/q', title: 'eps q/q' },
     { id: 'eps next 5y', title: 'eps>5y' },
     { id: 'eps past 5y', title: 'eps<5y' },
     { id: 'roe', title: 'roe' },
@@ -57,4 +54,4 @@ import { loadAllSymbols } from '../listing';
     { id: 'market cap', title: 'm cap' },
   ];
   writeAnalysisCSV('trend-prime.csv', headers, accepted);
-})();
+};

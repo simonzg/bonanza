@@ -1,12 +1,10 @@
-import { FilterRule } from '../analyze/simpleFilter';
+import { FilterRule } from './simpleFilter';
 import { writeAnalysisJSON, writeAnalysisCSV } from '../utils';
-import { loadMergedData } from '../analyze/dataMerger';
-import { SimpleFilter } from '../analyze/simpleFilter';
+import { loadMergedData } from './dataMerger';
+import { SimpleFilter } from './simpleFilter';
 import { loadAllSymbols } from '../listing';
 
-(async () => {
-  const symbols = loadAllSymbols();
-  const rawMerged = loadMergedData(symbols);
+export const fundamentalScreen = async (rawMerged: any[]) => {
   writeAnalysisJSON('raw-merged.json', rawMerged);
   const rules = [
     new FilterRule('upMedian > 0%'), // upMedian > 0%
@@ -50,8 +48,9 @@ import { loadAllSymbols } from '../listing';
     { id: 'upMedian', title: 'up%' },
     { id: 'upHigh', title: 'uphigh%' },
     { id: 'rate1m', title: '1m%' },
-    { id: 'rate3m', title: '3m%' },
     { id: 'rate6m', title: '6m%' },
+    { id: 'sales q/q', title: 'sales q/q' },
+    { id: 'eps q/q', title: 'eps q/q' },
     { id: 'eps next 5y', title: 'eps>5y' },
     { id: 'eps past 5y', title: 'eps<5y' },
     { id: 'roe', title: 'roe' },
@@ -69,4 +68,4 @@ import { loadAllSymbols } from '../listing';
     return a.industry > b.industry ? 1 : -1;
   });
   await writeAnalysisCSV('fundamental-prime.csv', headers, sorted);
-})();
+};

@@ -4,7 +4,7 @@ import { loadMergedData } from '../analyze/dataMerger';
 import { SimpleFilter } from '../analyze/simpleFilter';
 import { loadAllSymbols, loadSymbolsByListing } from '../listing';
 import { Listing } from '../const';
-import * as pool from '../../config/listing/mypool.json';
+import * as pool from '../../config/listing/pool.json';
 
 (async () => {
   let symbols = [];

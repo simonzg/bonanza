@@ -97,7 +97,7 @@ export const loadMergedData = (symbols: string[]) => {
       const ema60 = ema60Series[ema60Series.length - 1];
       const ema120Series = EMA.calculate({ period: 120, values: candle.c });
       const ema120 = ema120Series[ema120Series.length - 1];
-      const sp500Rate = 0.0174;
+      const sp500Rate = 0.0088;
       let relativeStrength = (rate1d - sp500Rate) / sp500Rate;
       if (sp500Rate < 0) {
         relativeStrength *= -1;

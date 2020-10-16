@@ -1,7 +1,10 @@
 export enum Listing {
   Top = 'Top (Nasdaq100 + S&P500 + DJI30)',
   All = 'All',
-  Myown = 'My Own',
+  Pool = 'Pool', // screening result
+  Watchlist = 'Watchlist', // handpick stocks
+  Portfolio = 'Portfolio', // positioned stocks
+  Temporary = 'Temporary', // temporary list to focus
   Others = 'Others',
 }
 
@@ -17,8 +20,7 @@ export enum Source {
   tipranks,
 }
 
-export const enumKeys = (es: any) =>
-  Object.values(es).filter((x) => typeof x === 'string');
+export const enumKeys = (es: any) => Object.values(es).filter((x) => typeof x === 'string');
 
 export const toListing = (val: string): Listing => {
   for (const [k, v] of Object.entries(Listing)) {
