@@ -1,0 +1,29 @@
+{
+  "Enterprise": {
+    "Infrastructure": [],
+    "Data": ["Storage", "Monitoring", "Analysis"],
+    "Management": ["Contract", "Employee"],
+    "Procurement": [],
+    "Sales": [],
+    "Communication": [],
+    "Security": [],
+    "Specialty": []
+  },
+  "Consumer": {
+    "Appearance": ["Apparel", "Cosmetics", "Footware"],
+    "Food": ["Food Retail", "Packaged Food", "Beverage", "Brewery"],
+    "Home": ["Homebuilding", "Furniture"],
+    "Commute": ["Car Retail"],
+    "Shopping": ["Shopping Center", "E-Commerce"],
+    "Entertainment": ["Streaming", "Game", "Theme Park"],
+    "Leisure": ["Airline", "Hotel"],
+    "Health Care": [],
+    "Education": [],
+    "Social": []
+  },
+  "Revolution": {
+    "Renewable Energy": ["Battery", "Solar", "Wind"],
+    "Genome": ["Screening", "Drug Develop"],
+    "5G": []
+  }
+}

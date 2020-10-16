@@ -1,0 +1,39 @@
+{
+  "Enterprise": {
+    "Infrastructure": ["MSFT", "AMZN", "GOOGL", "FSLY", "EQIX", "VMW", "SNOW"],
+    "Data": ["PSTG", "MDB", "ORCL", "SPLK", "DDOG", "DT", "AYX"],
+    "Management": ["DOCU", "WDAY", "PCTY", "PAYC"],
+    "Procurement": ["COUP"],
+    "Sales": ["CRM", "VEEV", "TTD", "SHOP"],
+    "Communication": ["TWLO", "RNG", "FIVN", "WORK", "ZM", "ASAN"],
+    "Security": ["OKTA", "CRWD", "NET", "FTNT"],
+    "Specialty": ["ADBE", "INTU", "U", "ADSK", "TMO"]
+  },
+  "Consumer": {
+    "Appearance": ["NKE", "LULU", "ELF", "EL"],
+    "Food": ["MDLZ", "COST", "TGT", "DPZ", "CMG", "KO", "PEP", "MNST", "MCD", "SBUX", "QSR", "WEN", "YUMC", "SAM"],
+    "Home": ["HD", "DHI", "RH", "W", "BLD"],
+    "Commute": ["GPI", "LAD", "CVNA"],
+    "Shopping": ["AMZN", "ETSY", "SPG", "M", "CHWY", "SPWH"],
+    "Entertainment": ["NFLX", "DIS", "SIX", "ROKU", "SPOT", "EA", "ATVI"],
+    "Leisure": ["DAL", "LUV", "H", "HLT"],
+    "Health Care": ["LLY", "BMY", "ABT", "JNJ", "TDOC", "EW", "DXCM", "PODD", "LVGO", "SDC"],
+    "Education": ["CHGG"],
+    "Social": ["FB", "TWTR", "AAPL"]
+  },
+  "Revolution": {
+    "Renewable Energy": ["TSLA", "NEE", "ENPH", "AMRC", "OESX", "TPIC", "CWEN", "SPWR", "REGI", "RUN"],
+    "Genome": ["NVTA", "NTRA", "EXAS", "SGEN", "EXEL", "GH", "ILMN", "TWO", "NEO", "CRSP"],
+    "5G": ["QRVO", "MRVL", "QCOM", "ADI", "NVDA"]
+  },
+  "FinTech": {
+    "Bank": ["JPM", "BAC", "GS", "MS"],
+    "Insurance": ["PGR", "UNH", "HUM", "ANTM"],
+    "Data": ["SPGI", "MSCI", "MORN", "NDAQ", "FDS", "EFX", "TRU", "FICO"],
+    "Payment": ["SQ", "PYPL", "V", "MA", "AXP", "SE", "MELI"]
+  },
+  "Extra": {
+    "Industry": ["DE", "BA", "CAT"],
+    "Waste": ["WM"]
+  }
+}
