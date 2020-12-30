@@ -1,9 +1,9 @@
-import { loadMergedData } from '../analyze/dataMerger';
+import { loadMergedData } from './dataMerger';
 import { loadSymbolsByListing, loadWatchlistSymbolWithCategory } from '../listing';
 import { CSVHeaders, Listing } from '../const';
 import { writeAnalysisCSV } from '../utils';
 
-const writeFacts = async (list: Listing, filename: string) => {
+export const writeFacts = async (list: Listing, filename: string) => {
   const symbols = loadSymbolsByListing(list);
   const facts = loadMergedData(symbols);
   const symSet = new Set([]);
@@ -35,10 +35,3 @@ const writeFacts = async (list: Listing, filename: string) => {
   }
   await writeAnalysisCSV(filename, headers, facts);
 };
-
-(async () => {
-  await writeFacts(Listing.Pool, 'pool-facts.csv');
-  await writeFacts(Listing.Portfolio, 'portfolio-facts.csv');
-  await writeFacts(Listing.Temporary, 'temporary-facts.csv');
-  await writeFacts(Listing.Watchlist, 'watchlist-facts.csv');
-})();
