@@ -10,6 +10,9 @@
     "analyze": "ts-node src/analysis.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "bserver": "dist/src/server.js"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
