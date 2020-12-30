@@ -1,5 +1,4 @@
 import { readData } from '../utils';
-import { loadAllSymbols } from '../listing';
 
 const formatPercent = (num: number): string => {
   return `${Math.floor(10000 * num) / 100}%`;
@@ -9,6 +8,20 @@ export const loadMergedData = (symbols: string[]) => {
   const result = [];
   const visited = {};
   const EMA = require('technicalindicators').EMA;
+
+  let sp500Rate = 0;
+  const spyStr = readData('finviz', 'page', 'SPY');
+  try {
+    if (!!spyStr) {
+      const spy = JSON.parse(spyStr);
+      const spyChange = spy['change'];
+      sp500Rate = parseFloat(spyChange) / 100.0;
+    }
+  } catch (e) {
+    // ignore
+  }
+  console.log('Base: SPY, change: ', sp500Rate);
+
   for (const symbol of symbols) {
     try {
       if (symbol in visited) {
@@ -27,13 +40,7 @@ export const loadMergedData = (symbols: string[]) => {
       if (profileData) {
         industry = JSON.parse(profileData).finnhubIndustry;
       }
-      if (
-        !dayIndicatorData ||
-        !candleData ||
-        !priceTargetData ||
-        !recommendData ||
-        !finvizData
-      ) {
+      if (!dayIndicatorData || !candleData || !priceTargetData || !recommendData || !finvizData) {
         continue;
       }
 
@@ -97,11 +104,11 @@ export const loadMergedData = (symbols: string[]) => {
       const ema60 = ema60Series[ema60Series.length - 1];
       const ema120Series = EMA.calculate({ period: 120, values: candle.c });
       const ema120 = ema120Series[ema120Series.length - 1];
-      const sp500Rate = 0.0088;
       let relativeStrength = (rate1d - sp500Rate) / sp500Rate;
       if (sp500Rate < 0) {
         relativeStrength *= -1;
       }
+
       result.push({
         symbol,
         industry,

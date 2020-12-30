@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import express from 'express';
 import { Source, toSource } from './const';
 import { PROXY_PORT } from './config';
@@ -19,12 +21,7 @@ app.get('/hello', (req: express.Request, res: express.Response) => {
 app.post('/fetch', async (req: express.Request, res: express.Response) => {
   console.log(req.body);
   const keys = Object.keys(req.body);
-  if (
-    !keys.includes('source') ||
-    !keys.includes('model') ||
-    !keys.includes('symbol') ||
-    !keys.includes('url')
-  ) {
+  if (!keys.includes('source') || !keys.includes('model') || !keys.includes('symbol') || !keys.includes('url')) {
     return res.json({ error: 'incomplete query' });
   }
   const source = toSource(req.body.source);

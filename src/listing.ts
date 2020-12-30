@@ -9,7 +9,7 @@ import * as nasdaq from '../config/listing/nasdaq.json';
 import * as temporary from '../config/listing/temporary.json';
 import * as portfolio from '../config/listing/portfolio.json';
 import * as watchlist from '../config/listing/watchlist.json';
-import { watch } from 'fs';
+import { symlink, watch } from 'fs';
 
 export const loadPoolSymbols = (): string[] => {
   let symbols: { [key: string]: boolean } = {};
@@ -37,6 +37,21 @@ export const loadWatchlistSymbols = (): string[] => {
     }
   }
   return Object.keys(symbols);
+};
+
+export const loadWatchlistSymbolWithCategory = () => {
+  let symbols = {};
+  for (const sector of Object.keys(watchlist)) {
+    for (const category of Object.keys(watchlist[sector])) {
+      const symList = watchlist[sector][category];
+      if (symList instanceof Array) {
+        for (const sym of symList) {
+          symbols[sym] = { sector, category };
+        }
+      }
+    }
+  }
+  return symbols;
 };
 
 export const loadSymbolsByListing = (ex: Listing): string[] => {

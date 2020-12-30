@@ -3,6 +3,7 @@ import { writeAnalysisJSON, writeAnalysisCSV } from '../utils';
 import { loadMergedData } from './dataMerger';
 import { SimpleFilter } from './simpleFilter';
 import { loadAllSymbols } from '../listing';
+import { CSVHeaders } from '../const';
 
 export const fundamentalScreen = async (rawMerged: any[]) => {
   writeAnalysisJSON('raw-merged.json', rawMerged);
@@ -42,30 +43,11 @@ export const fundamentalScreen = async (rawMerged: any[]) => {
     rejected
   );
 
-  const headers = [
-    { id: 'symbol', title: 'Sym' },
-    { id: 'industry', title: 'Ind' },
-    { id: 'upMedian', title: 'up%' },
-    { id: 'upHigh', title: 'uphigh%' },
-    { id: 'rate1m', title: '1m%' },
-    { id: 'rate6m', title: '6m%' },
-    { id: 'sales q/q', title: 'sales q/q' },
-    { id: 'eps q/q', title: 'eps q/q' },
-    { id: 'eps next 5y', title: 'eps>5y' },
-    { id: 'eps past 5y', title: 'eps<5y' },
-    { id: 'roe', title: 'roe' },
-    { id: 'peg', title: 'peg' },
-    { id: 'rsi (14)', title: 'rsi' },
-    { id: 'atr', title: 'atr' },
-    { id: 'price', title: 'p' },
-    { id: 'targetMedian', title: 'Tgt M' },
-    { id: 'targetHigh', title: 'Tgt H' },
-  ];
   let sorted = accepted.sort((a, b): number => {
     if (a.industry == b.industry) {
       return parseInt(a['upHigh']) < parseInt(b['upHigh']) ? 1 : -1;
     }
     return a.industry > b.industry ? 1 : -1;
   });
-  await writeAnalysisCSV('fundamental-prime.csv', headers, sorted);
+  await writeAnalysisCSV('fundamental-prime.csv', CSVHeaders, sorted);
 };

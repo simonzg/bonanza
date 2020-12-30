@@ -45,3 +45,40 @@ export const toSource = (key: string): Source => {
     }
   }
 };
+
+export const CSVHeaders = [
+  { id: 'symbol', title: 'sym' },
+
+  // fundamentals
+  { id: 'industry', title: 'ind' },
+  { id: 'dividend %', title: 'div%' },
+  { id: 'roe', title: 'roe' },
+  { id: 'peg', title: 'peg' },
+  { id: 'market cap', title: 'mcap' },
+
+  // strength
+  { id: 'price', title: 'p' },
+  { id: 'relativeStrength', title: 'relStr' },
+  { id: 'shortTrend', title: 'c/s' },
+  { id: 'mediumTrend', title: 's/m' },
+  { id: 'longTrend', title: 'm/l' },
+
+  // analytics
+  { id: 'upMedian', title: 'up%' },
+  { id: 'upHigh', title: 'uphigh%' },
+
+  // momentum
+  { id: 'rsi (14)', title: 'rsi' },
+  { id: 'atr', title: 'atr' },
+
+  // performance
+  { id: 'rate1m', title: '1m%' },
+  { id: 'rate6m', title: '6m%' },
+  { id: 'sales q/q', title: 'sales q/q' },
+  { id: 'eps q/q', title: 'eps q/q' },
+  { id: 'eps next 5y', title: 'eps>5y' },
+  { id: 'eps past 5y', title: 'eps<5y' },
+
+  { id: 'targetMedian', title: 'tgtM' },
+  { id: 'targetHigh', title: 'tgtH' },
+];

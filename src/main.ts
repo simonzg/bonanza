@@ -1,16 +1,10 @@
+#!/usr/bin/env node
+
 import inquirer from 'inquirer';
 import { getModelNames, loadFinnhubAccounts } from './config';
 import { loadSymbolsByListing } from './listing';
 import { TaskExecutor, TaskExecutorOption } from './task/taskExecutor';
-import {
-  Listing,
-  Action,
-  Source,
-  enumKeys,
-  toListing,
-  toAction,
-  toSource,
-} from './const';
+import { Listing, Action, Source, enumKeys, toListing, toAction, toSource } from './const';
 
 (async () => {
   let models: string[];
@@ -59,9 +53,7 @@ import {
   const listing = toListing(answers.listing);
   let symbols: string[];
   if (listing === Listing.Others) {
-    answers = await inquirer.prompt([
-      { type: 'input', name: 'symbols', message: 'What symbols do you need?' },
-    ]);
+    answers = await inquirer.prompt([{ type: 'input', name: 'symbols', message: 'What symbols do you need?' }]);
     symbols = answers.symbols.split(',');
   } else {
     symbols = await loadSymbolsByListing(listing);
@@ -79,9 +71,7 @@ import {
     ]);
     skipExisting = answers.skip;
 
-    answers = await inquirer.prompt([
-      { type: 'confirm', name: 'proxy', message: 'Do you want to use proxy?' },
-    ]);
+    answers = await inquirer.prompt([{ type: 'confirm', name: 'proxy', message: 'Do you want to use proxy?' }]);
     proxyFetch = answers.proxy;
   }
   console.log({
@@ -95,14 +85,7 @@ import {
   await runCmd(action, source, models, symbols, proxyFetch, skipExisting);
 })();
 
-const runCmd = async (
-  action: Action,
-  source: Source,
-  models: string[],
-  symbols: string[],
-  proxyFetch: boolean,
-  skipExisting: boolean
-) => {
+const runCmd = async (action: Action, source: Source, models: string[], symbols: string[], proxyFetch: boolean, skipExisting: boolean) => {
   for (const model of models) {
     let options: TaskExecutorOption = {
       action,
