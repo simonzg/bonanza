@@ -5,9 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/main.ts",
+    "server": "ts-node src/server.ts",
     "fetchall": "ts-node src/cmd/fetchAll.ts",
-    "calcignore": "ts-node src/cmd/calcIgnore.ts",
-    "analyze": "ts-node src/analysis.ts",
+    "ignore": "ts-node src/cmd/updateIgnored.ts",
+    "analyze": "ts-node src/cmd/analyze.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
