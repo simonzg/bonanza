@@ -45,6 +45,8 @@ const runCmd = async (action: Action, source: Source, models: string[], symbols:
   await runCmd(Action.fetch, Source.finviz, ['page'], symbols, true, false);
 
   // get tipranks data
-  // await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
+  await runCmd(Action.fetch, Source.tipranks, ['page'], symbols, true, false);
+
+  // get SPY, QQQ data
   await runCmd(Action.fetch, Source.finviz, ['page'], ['SPY', 'QQQ'], true, false);
 })();

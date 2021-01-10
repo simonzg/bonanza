@@ -8,34 +8,40 @@
     "Sales": ["CRM", "VEEV", "TTD", "SHOP"],
     "Communication": ["TWLO", "RNG", "FIVN", "ZM", "ASAN"],
     "Security": ["OKTA", "CRWD", "NET", "FTNT"],
-    "Specialty": ["ADBE", "U", "ADSK", "TMO"]
+    "Specialty": ["ADBE", "U", "ADSK", "TMO"],
+    "Medical Instrument": ["DXCM", "ABT", "EW", "DHR", "SYK", "ISRG", "IDXX", "BSX", "PODD"],
+    "Pharmaceutical": ["LLY", "JNJ", "MRK", "PFE", "BMY", "PODD", "LVGO", "SDC", "ALGN"]
   },
   "Consumer": {
-    "Appearance": ["NKE", "LULU", "ELF", "EL"],
+    "Appearance": ["NKE", "LULU", "ANF", "GOOS"],
+    "Grocery": ["COST", "BJ", "WMT", "TGT"],
     "Food": ["MDLZ", "COST", "TGT", "DPZ", "CMG", "KO", "PEP", "MNST", "MCD", "SBUX", "QSR", "WEN", "YUMC", "SAM"],
     "Home": ["HD", "LOW", "PHM", "LEN", "DHI", "RH", "W", "BLD"],
-    "Commute": ["GM", "LAD", "CVNA"],
-    "Shopping": ["AMZN", "ETSY", "SPG", "M", "CHWY", "SPWH"],
+    "Auto": ["GM", "TSLA", "F", "LAD", "CVNA"],
+    "Shopping": ["AMZN", "CHWY", "ETSY", "SPG", "M"],
     "Entertainment": ["NFLX", "DIS", "SIX", "ROKU", "SPOT", "EA", "ATVI"],
-    "Leisure": ["DAL", "LUV", "H", "HLT"],
-    "Health Care": ["LLY", "BMY", "ABT", "JNJ", "EW", "DXCM", "PODD", "LVGO", "SDC", "ALGN"],
+    "Travel": ["DAL", "LUV", "H", "HLT"],
+    "Cosmetics": ["ULTA", "EL", "ELF", "COTY"],
+    "Fitness": ["PLNT", "PTON"],
+    "Dental": ["ALGN", "SDC", "NVST"],
     "Education": ["CHGG"],
     "Social": ["FB", "TWTR", "AAPL"]
   },
   "Revolution": {
-    "Renewable Energy": ["TSLA", "NEE", "ENPH", "AMRC", "OESX", "TPIC", "CWEN", "SPWR", "REGI", "RUN"],
+    "Renewable Energy": ["NEE", "ETN", "ENPH", "AMRC", "OESX", "TPIC", "CWEN", "SPWR", "REGI", "RUN"],
     "Genome": ["NVTA", "NTRA", "EXAS", "SGEN", "EXEL", "GH", "ILMN", "TWO", "NEO", "CRSP"],
-    "5G": ["QRVO", "MRVL", "QCOM", "ADI", "NVDA"],
-    "Digital Healthcare": ["ONEM", "TDOC"]
+    "5G": ["AMT", "QRVO", "NVDA", "ADI", "MRVL", "QCOM"],
+    "Digital Healthcare": ["ONEM", "TDOC"],
+    "Biotech": ["ABBV", "VRTX", "REGN", "MRNA", "SGEN", "AMGN", "BIIB"]
   },
   "FinTech": {
-    "Bank": ["JPM", "BAC", "GS", "MS"],
+    "Bank": ["GS", "ALLY", "JPM", "BAC", "MS"],
     "Insurance": ["PGR", "ALL", "UNH", "HUM", "ANTM"],
     "Data": ["SPGI", "MSCI", "MORN", "NDAQ", "FDS", "EFX", "TRU", "FICO"],
-    "Payment": ["SQ", "PYPL", "V", "MA", "AXP", "SE", "MELI"]
+    "Payment": ["MA", "PYPL", "SE", "MELI", "V", "SQ", "AXP"]
   },
   "Extra": {
-    "Industry": ["DE", "BA", "CAT"],
+    "Industry": ["DE", "BA", "CAT", "UPS", "HON", "RTX", "MMM", "LMT", "GE"],
     "Waste": ["WM"],
     "SPAC": ["IPOB", "SPCE", "IPOC", "PSTH", "FEAC"]
   },

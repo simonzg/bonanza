@@ -19,12 +19,7 @@ export const deleteData = (source: string, model: string, symbol: string) => {
   }
 };
 
-export const writeData = (
-  source: string,
-  model: string,
-  symbol: string,
-  data: string
-) => {
+export const writeData = (source: string, model: string, symbol: string, data: string) => {
   const filepath = getDataPath(source, model, symbol);
   console.log(`write result to ${path.normalize(filepath)}`);
   return fs.writeFileSync(filepath, data);
@@ -48,11 +43,7 @@ export const writeAnalysisJSON = (filename: string, obj: object) => {
   console.log(`saved JSON: ${filepath}`);
 };
 
-export const writeAnalysisCSV = async (
-  filename: string,
-  headers: { id: string; title: string }[],
-  data: object
-) => {
+export const writeAnalysisCSV = async (filename: string, headers: { id: string; title: string }[], data: object) => {
   const filepath = path.join(__dirname, '..', 'analysis', filename);
   const createCsvWriter = require('csv-writer').createObjectCsvWriter;
   const csvWriter = createCsvWriter({

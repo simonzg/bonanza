@@ -1,13 +1,19 @@
 import { fundamentalScreen } from '../analyze/fundamentalScreen';
 import { strengthScreen } from '../analyze/strengthScreen';
 import { loadMergedData } from '../analyze/dataMerger';
-import { loadAllSymbols } from '../listing';
+import { loadAllSymbols, loadWatchlistSymbols } from '../listing';
 import { Listing } from '../const';
 import { writeFacts } from '../analyze/facts';
+import { watchlistTiming } from '../analyze/watchlistTiming';
 
 (async () => {
   const symbols = loadAllSymbols();
   const rawMerged = loadMergedData(symbols);
+  const wlSymbols = loadWatchlistSymbols();
+  const rawMergedWL = loadMergedData(wlSymbols);
+
+  await watchlistTiming(rawMergedWL);
+  console.group(`[Done] timing watchlist`);
 
   await fundamentalScreen(rawMerged);
   console.log('[Done] screening for fundamentals');
