@@ -1,15 +1,9 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
-import { getModelNames, loadFinnhubAccounts } from './config';
-import { loadSymbolsByListing } from './listing';
-import { TaskExecutor, TaskExecutorOption } from './task/taskExecutor';
-import { Listing, Action, Source, enumKeys, toListing, toAction, toSource } from './const';
-import { loadMergedData } from './analyze/dataMerger';
+import { loadMergedData } from '../analyze/dataMerger';
 
 (async () => {
-  let models: string[];
-
   let answers = await inquirer.prompt([
     {
       type: 'input',

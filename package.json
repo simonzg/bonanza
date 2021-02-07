@@ -9,6 +9,7 @@
     "fetchall": "ts-node src/cmd/fetchAll.ts",
     "ignore": "ts-node src/cmd/updateIgnored.ts",
     "analyze": "ts-node src/cmd/analyze.ts",
+    "profile": "ts-node src/cmd/profile.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {

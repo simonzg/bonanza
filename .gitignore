@@ -4,3 +4,4 @@ node_modules
 *.tgz
 ansible
 analysis
+.DS_Store
