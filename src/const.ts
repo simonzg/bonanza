@@ -87,3 +87,13 @@ export const CSVHeaders = [
   { id: 'targetMedian', title: 'tgtM' },
   { id: 'targetHigh', title: 'tgtH' },
 ];
+
+export const TiprankHeaders = [
+  { id: 'trScore', title: 'score' },
+  { id: 'trBuy', title: 'nB' },
+  { id: 'trHold', title: 'nH' },
+  { id: 'trSell', title: 'hS' },
+
+  { id: 'trUp', title: 'trUp%' },
+  { id: 'trUpHigh', title: 'trHigh%' },
+];

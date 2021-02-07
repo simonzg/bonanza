@@ -34,6 +34,7 @@ export const loadMergedData = (symbols: string[]) => {
       const dayIndicatorData = readData('finnhub', 'day_indicator', symbol);
       const recommendData = readData('finnhub', 'recommend', symbol);
       const finvizData = readData('finviz', 'page', symbol);
+      const tiprankData = readData('tipranks', 'page', symbol);
 
       const profileData = readData('finnhub', 'profile', symbol);
       let industry = 'unknown';
@@ -109,6 +110,42 @@ export const loadMergedData = (symbols: string[]) => {
         relativeStrength *= -1;
       }
 
+      // TipRanks
+      let trScore = 0,
+        trBuy = 0,
+        trHold = 0,
+        trSell = 0,
+        trPtLow = 0,
+        trPtHigh = 0,
+        trPt = 0,
+        trUpLow = '0%',
+        trUpHigh = '0%',
+        trUp = '0%';
+
+      try {
+        const tr = JSON.parse(tiprankData);
+        if (!!tr) {
+          if (tr.consensuses && tr.consensuses.length > 0) {
+            const d = tr.consensuses[0];
+            trBuy = d.nB;
+            trHold = d.nH;
+            trSell = d.nS;
+          }
+          if (tr.ptConsensus && tr.ptConsensus.length > 0) {
+            const pt = tr.ptConsensus[0];
+            trPtLow = pt.low;
+            trPtHigh = pt.high;
+            trPt = pt.priceTarget;
+            trUp = formatPercent((trPt - closePrice) / closePrice);
+            trUpLow = formatPercent((trPtLow - closePrice) / closePrice);
+            trUpHigh = formatPercent((trPtHigh - closePrice) / closePrice);
+          }
+          trScore = tr.tipranksStockScore ? tr.tipranksStockScore.score || 0 : 0;
+        }
+      } catch (e) {
+        console.log('error during parse tiprank data for :', symbol);
+      }
+
       result.push({
         symbol,
         industry,
@@ -131,6 +168,7 @@ export const loadMergedData = (symbols: string[]) => {
         buyMinusHold: buyTotal - holdTotal,
 
         // rate changed within 1month, 3months, 6months and 1year
+        rate1d,
         rate1m,
         rate3m,
         rate6m,
@@ -151,6 +189,17 @@ export const loadMergedData = (symbols: string[]) => {
         upEMA120: formatPercent((closePrice - ema120) / ema120),
 
         ...finviz,
+
+        trScore,
+        trUp,
+        trUpHigh,
+        trUpLow,
+        trBuy,
+        trSell,
+        trHold,
+        trPtHigh,
+        trPtLow,
+        trPt,
       });
     } catch (e) {
       console.log('ERROR HAPPENED: ', e);

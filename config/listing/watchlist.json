@@ -28,7 +28,7 @@
     "Social": ["FB", "TWTR", "AAPL"]
   },
   "Revolution": {
-    "Renewable Energy": ["NEE", "ETN", "ENPH", "AMRC", "OESX", "TPIC", "CWEN", "SPWR", "REGI", "RUN"],
+    "Renewable Energy": ["NEE", "ETN", "ENPH", "SEDG", "BE", "AMRC", "OESX", "TPIC", "CWEN", "SPWR", "REGI", "RUN"],
     "Genome": ["NVTA", "NTRA", "EXAS", "SGEN", "EXEL", "GH", "ILMN", "TWO", "NEO", "CRSP"],
     "5G": ["AMT", "QRVO", "NVDA", "ADI", "MRVL", "QCOM"],
     "Digital Healthcare": ["ONEM", "TDOC"],

@@ -8,22 +8,22 @@ const smaPeriod = 8;
 const data = readData('finnhub', 'candle', 'MSFT');
 const values = JSON.parse(data).c;
 
-// const macdInput = {
-//   values,
-//   fastPeriod: 12,
-//   slowPeriod: 26,
-//   signalPeriod: 9,
-//   SimpleMAOscillator: false,
-//   SimpleMASignal: false,
-// };
+const macdInput = {
+  values,
+  fastPeriod: 12,
+  slowPeriod: 26,
+  signalPeriod: 9,
+  SimpleMAOscillator: false,
+  SimpleMASignal: false,
+};
 
-// const macd = MACD.calculate(macdInput);
-// console.log('MACD:', macd, macd.length);
-// for (const r of macd) {
-//   console.log(r);
-// }
+const macd = MACD.calculate(macdInput);
+console.log('MACD:', macd, macd.length);
+for (const r of macd) {
+  console.log(r);
+}
 const ema = EMA.calculate({ period: 20, values });
-console.log('EMA:', ema, ema.length);
+// console.log('EMA:', ema, ema.length);
 
 // const trix = TRIX.calculate({ values, period: 20 });
 // for (const t of trix) {

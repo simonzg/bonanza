@@ -102,6 +102,20 @@ export class SimpleFilter extends Filter {
     this.rules = rules;
   }
 
+  matchAll(datas: any[]) {
+    let accepted = [];
+    let rejected = [];
+    for (const raw of datas) {
+      const fr = this.match(raw);
+      if (fr.accepted) {
+        accepted.push(raw);
+      } else {
+        rejected.push(fr);
+      }
+    }
+    return { accepted, rejected };
+  }
+
   match(data: any): FilterResult {
     if (!data || !data.symbol) {
       return {
@@ -116,9 +130,7 @@ export class SimpleFilter extends Filter {
         return {
           symbol: data.symbol,
           accepted: false,
-          rejectReason: `not matching rule: ${rule.toString()}, actual value: ${
-            rule.value
-          }`,
+          rejectReason: `not matching rule: ${rule.toString()}, actual value: ${rule.value}`,
         };
       }
     }
