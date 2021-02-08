@@ -32,6 +32,7 @@ const runCmd = async (action: Action, source: Source, models: string[], symbols:
   console.log({
     symbolCount: symbols.length,
   });
+
   // get finnhub one-time fact
   await runCmd(Action.fetch, Source.finnhub, ['profile', 'peer'], symbols, true, true);
 
