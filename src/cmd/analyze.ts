@@ -3,7 +3,7 @@ import { loadAllSymbols, loadWatchlistSymbols } from '../listing';
 import { Listing } from '../const';
 import { writeFacts } from '../analyze/facts';
 import { watchlistTiming } from '../analyze/watchlistTiming';
-import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen } from '../screen';
+import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen, dividendScreen, farfetchScreen } from '../screen';
 
 (async () => {
   const symbols = loadAllSymbols();
@@ -18,8 +18,10 @@ import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, stren
   await shortTermBargainScreen(rawMerged);
   await longTermBargainScreen(rawMerged);
   await strengthScreen(rawMerged);
+  await farfetchScreen(rawMerged);
   await macdScreen(rawMerged);
   await tipranksScreen(rawMerged);
+  await dividendScreen(rawMerged);
 
   // write facts
   await writeFacts(Listing.Pool);

@@ -7,12 +7,16 @@ import {
   ShortTermBargainScreenRules,
   LongTermBargainScreenRules,
   FundementalScreenRules,
+  DividendScreenRules,
   descUp,
   descStrength,
+  ascUpEMA60,
   descTrScore,
   descTrBuy,
   descTrUp,
+  descDividend,
   cutOff,
+  FarfetchScreenRules,
 } from './screenRules';
 export * from './macdScreen';
 
@@ -92,5 +96,32 @@ export const fundamentalScreen = async (rawMerged: any[]) => {
 
   await writeAnalysisCSV('picked-by-fundamental.csv', CSVHeaders, sorted);
   console.log('[Done] screening for fundamental');
+  console.log('-'.repeat(40));
+};
+
+export const dividendScreen = async (rawMerged: any[]) => {
+  // for debug
+  // writeAnalysisJSON('raw-merged.json', rawMerged);
+
+  const filter = new SimpleFilter(DividendScreenRules);
+  const { accepted, rejected } = filter.matchAll(rawMerged);
+
+  // sort by desc up
+  const sorted = accepted.sort(descDividend);
+
+  await writeAnalysisCSV('picked-by-dividend.csv', CSVHeaders, sorted);
+  console.log('[Done] screening for dividend');
+  console.log('-'.repeat(40));
+};
+
+export const farfetchScreen = async (rawMerged: any[]) => {
+  const filter = new SimpleFilter(FarfetchScreenRules);
+  const { accepted, rejected } = filter.matchAll(rawMerged);
+
+  // sort by desc strength
+  const sorted = accepted.sort(ascUpEMA60);
+
+  await writeAnalysisCSV('picked-by-farfetch.csv', CSVHeaders, cutOff(sorted, 30));
+  console.log('[Done] screening for farfetch');
   console.log('-'.repeat(40));
 };

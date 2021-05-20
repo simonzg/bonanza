@@ -1,7 +1,7 @@
 import { readData } from '../utils';
 
 const formatPercent = (num: number): string => {
-  return `${Math.floor(10000 * num) / 100}%`;
+  return `${Math.round(10000 * num) / 100}%`;
 };
 
 export const loadMergedData = (symbols: string[]) => {
@@ -168,7 +168,7 @@ export const loadMergedData = (symbols: string[]) => {
         buyMinusHold: buyTotal - holdTotal,
 
         // rate changed within 1month, 3months, 6months and 1year
-        rate1d,
+        rate1d: formatPercent(rate1d),
         rate1m,
         rate3m,
         rate6m,
