@@ -35,6 +35,8 @@ export const ShortTermBargainScreenRules = [
   new FilterRule('trUp > 8%'),
 ];
 
+export const TipRanksStrongBuyScreenRules = [...CommonScreenRules, new FilterRule('trStrongBuy% > 0.5'), new FilterRule('trUp > 5%'), new FilterRule('upMedian > 5%')];
+
 export const LongTermBargainScreenRules = [...CommonScreenRules, new FilterRule('shortTrend > 0%'), new FilterRule('longTrend < 0%'), new FilterRule('trBuy > 2'), new FilterRule('trUp > 5%')];
 
 export const FarfetchScreenRules = [...CommonScreenRules, new FilterRule('upEMA60 < -10%'), new FilterRule('trBuy > 2')];

@@ -1,5 +1,5 @@
 import { loadMergedData } from './dataMerger';
-import { loadSymbolsByListing, loadWatchlistSymbolWithCategory } from '../listing';
+import { loadSectorSymbolsWithSector, loadSymbolsByListing, loadWatchlistSymbolWithCategory } from '../listing';
 import { CSVHeaders, Listing, TiprankHeaders } from '../const';
 import { writeAnalysisCSV } from '../utils';
 
@@ -22,6 +22,14 @@ export const writeFacts = async (list: Listing) => {
       }
     }
   }
+  if (list === Listing.Sectors) {
+    const syms = loadSectorSymbolsWithSector();
+    for (const f of facts) {
+      if (f.symbol in syms) {
+        f.sector = syms[f.symbol];
+      }
+    }
+  }
 
   for (const f of facts) {
     symSet.add(f.symbol);
@@ -37,6 +45,12 @@ export const writeFacts = async (list: Listing) => {
 
   if (list === Listing.Watchlist) {
     headers.push({ id: 'sector', title: 'sec' }, { id: 'category', title: 'cat' });
+  }
+  if (list === Listing.Sectors) {
+    headers.shift();
+    headers.shift();
+    headers.unshift({ id: 'sector', title: 'sec' });
+    headers.unshift({ id: 'symbol', title: 'sym' });
   }
   const filename = `facts-for-${Listing[list]}.csv`;
   await writeAnalysisCSV(filename, headers, facts);

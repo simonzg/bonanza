@@ -121,6 +121,7 @@ export const loadMergedData = (symbols: string[]) => {
         trUpLow = '0%',
         trUpHigh = '0%',
         trUp = '0%';
+      let trStrongBuy = 0;
 
       try {
         const tr = JSON.parse(tiprankData);
@@ -130,6 +131,7 @@ export const loadMergedData = (symbols: string[]) => {
             trBuy = d.nB;
             trHold = d.nH;
             trSell = d.nS;
+            trStrongBuy = trBuy >= 3 ? trBuy / (trBuy + trHold + trSell) : 0.45;
           }
           if (tr.ptConsensus && tr.ptConsensus.length > 0) {
             const pt = tr.ptConsensus[0];
@@ -139,6 +141,7 @@ export const loadMergedData = (symbols: string[]) => {
             trUp = formatPercent((trPt - closePrice) / closePrice);
             trUpLow = formatPercent((trPtLow - closePrice) / closePrice);
             trUpHigh = formatPercent((trPtHigh - closePrice) / closePrice);
+            trStrongBuy = trBuy >= 3 ? trBuy / (trBuy + trHold + trSell) : 0.45;
           }
           trScore = tr.tipranksStockScore ? tr.tipranksStockScore.score || 0 : 0;
         }
@@ -197,6 +200,7 @@ export const loadMergedData = (symbols: string[]) => {
         trBuy,
         trSell,
         trHold,
+        'trStrongBuy%': trStrongBuy,
         trPtHigh,
         trPtLow,
         trPt,

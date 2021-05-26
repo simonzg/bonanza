@@ -9,7 +9,18 @@ import * as nasdaq from '../config/listing/nasdaq.json';
 import * as temporary from '../config/listing/temporary.json';
 import * as portfolio from '../config/listing/portfolio.json';
 import * as watchlist from '../config/listing/watchlist.json';
+import * as sectors from '../config/listing/sectors.json';
 import { symlink, watch } from 'fs';
+
+export const loadSectorSymbols = (): string[] => {
+  let symbols = [];
+  for (const sector in sectors) {
+    if (sectors[sector] instanceof Array) {
+      symbols = symbols.concat(sectors[sector]);
+    }
+  }
+  return symbols;
+};
 
 export const loadPoolSymbols = (): string[] => {
   let symbols: { [key: string]: boolean } = {};
@@ -37,6 +48,19 @@ export const loadWatchlistSymbols = (): string[] => {
     }
   }
   return Object.keys(symbols);
+};
+
+export const loadSectorSymbolsWithSector = () => {
+  let symbols = {};
+  for (const sector of Object.keys(sectors)) {
+    if (!(sectors[sector] instanceof Array)) {
+      continue;
+    }
+    for (const sym of sectors[sector]) {
+      symbols[sym] = sector;
+    }
+  }
+  return symbols;
 };
 
 export const loadWatchlistSymbolWithCategory = () => {
@@ -68,6 +92,9 @@ export const loadSymbolsByListing = (ex: Listing): string[] => {
       break;
     case Listing.Pool:
       symbols = loadPoolSymbols();
+      break;
+    case Listing.Sectors:
+      symbols = loadSectorSymbols();
       break;
     case Listing.Top:
       symbols = nasdaq100.constituents.concat(dji30.constituents).concat(sp500.constituents);

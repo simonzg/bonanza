@@ -6,6 +6,7 @@ export enum Listing {
   Portfolio = 'Portfolio', // positioned stocks
   Temporary = 'Temporary', // temporary list to focus
   Others = 'Others',
+  Sectors = 'Sectors',
 }
 
 export enum Action {

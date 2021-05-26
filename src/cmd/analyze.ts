@@ -3,7 +3,7 @@ import { loadAllSymbols, loadWatchlistSymbols } from '../listing';
 import { Listing } from '../const';
 import { writeFacts } from '../analyze/facts';
 import { watchlistTiming } from '../analyze/watchlistTiming';
-import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen, dividendScreen, farfetchScreen } from '../screen';
+import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen, dividendScreen, farfetchScreen, tipranksStrongBuyScreen } from '../screen';
 
 (async () => {
   const symbols = loadAllSymbols();
@@ -21,6 +21,7 @@ import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, stren
   await farfetchScreen(rawMerged);
   await macdScreen(rawMerged);
   await tipranksScreen(rawMerged);
+  await tipranksStrongBuyScreen(rawMerged);
   await dividendScreen(rawMerged);
 
   // write facts
@@ -28,4 +29,5 @@ import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, stren
   await writeFacts(Listing.Portfolio);
   await writeFacts(Listing.Temporary);
   await writeFacts(Listing.Watchlist);
+  await writeFacts(Listing.Sectors);
 })();

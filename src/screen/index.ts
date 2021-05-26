@@ -17,6 +17,7 @@ import {
   descDividend,
   cutOff,
   FarfetchScreenRules,
+  TipRanksStrongBuyScreenRules,
 } from './screenRules';
 export * from './macdScreen';
 
@@ -26,6 +27,16 @@ export const tipranksScreen = async (rawMerged: any[]) => {
   // sort by trUp
   const sorted = accepted.sort(descTrBuy);
   await writeAnalysisCSV('picked-by-tipranks.csv', CSVHeaders, cutOff(sorted, 30));
+  console.log('[Done] screening for tipranks');
+  console.log('-'.repeat(40));
+};
+
+export const tipranksStrongBuyScreen = async (rawMerged: any[]) => {
+  const filter = new SimpleFilter(TipRanksStrongBuyScreenRules);
+  const { accepted, rejected } = filter.matchAll(rawMerged);
+  // sort by trUp
+  const sorted = accepted.sort(descTrBuy);
+  await writeAnalysisCSV('picked-by-tipranks-strongbuy.csv', CSVHeaders, cutOff(sorted, 30));
   console.log('[Done] screening for tipranks');
   console.log('-'.repeat(40));
 };

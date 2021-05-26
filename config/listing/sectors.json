@@ -1,0 +1,12 @@
+{
+  "XLK": ["AAPL", "MSFT", "V", "NVDA", "MA", "PYPL", "ADBE", "INTC", "CSCO", "CRM", "ACN", "AVGO", "TXN", "QCOM", "ORCL", "IBM", "AMAT", "INTU", "MU", "AMD"],
+  "XLY": ["AMZN", "TSLA", "HD", "MCD", "NKE", "LOW", "SBUX", "TGT", "BKNG", "TJX", "GM", "DG", "ROST", "F", "CMG", "ORLY", "APTV", "MAR", "EBAY", "YUM"],
+  "XLI": ["HON", "UPS", "UNP", "CAT", "RTX", "BA", "DE", "MMM", "GE", "LMT", "CSX", "FDX", "NSC", "ITW", "ETN", "NOC", "WM", "EMR", "ROP", "JCI"],
+  "XLB": ["LIN", "SHW", "APD", "FCX", "ECL", "DOW", "NEM", "DD", "PPG", "IFF", "CTVA", "BLL", "LYB", "NUE", "VMC", "IP", "MLM", "ALB", "AMCR", "CE"],
+  "XLE": ["XOM", "CVX", "EOG", "SLB", "MPC", "COP", "PSX", "KMI", "PXD", "VLO", "WMB", "OKE", "OXY", "HES", "HAL", "BKR", "FANG", "DVN", "MRO", "APA"],
+  "XLP": ["PG", "KO", "PEP", "WMT", "COST", "MDLZ", "PM", "MO", "CL", "EL", "KMB", "SYY", "STZ", "WBA", "GIS", "ADM", "MNST", "KR", "KHC", "HSY"],
+  "XLV": ["JNJ", "UNH", "PFE", "ABT", "ABBV", "MRK", "TMO", "MDT", "DHR", "LLY", "BMY", "AMGN", "CVS", "ISRG", "ANTM", "CI", "GILD", "SYK", "ZTS", "BDX"],
+  "XLU": ["NEE", "NUK", "SO", "D", "AEP", "EXC", "SRE", "XEL", "PEG", "WEC", "ES", "AWK", "DTE", "ED", "PPL", "EIX", "ETR", "AEE", "FE", "CMS"],
+  "XLF": ["BRK", "JPM", "BAC", "WFC", "C", "MS", "GS", "BLK", "SCHW", "AXP", "SPGI", "USB", "PNC", "TFC", "CB", "CME", "COF", "MMC", "ICE", "PGR"],
+  "XLRE": ["AMT", "PLD", "CCI", "EQIX", "DLR", "PSA", "SPG", "SBAC", "WELL", "WY", "CBRE", "AVB", "O", "EQR", "ARE", "VTR", "EXR", "ESS", "PEAK", "MAA"]
+}
