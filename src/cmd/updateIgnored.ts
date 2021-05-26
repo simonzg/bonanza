@@ -9,10 +9,7 @@ import { loadMergedData } from '../analyze/dataMerger';
 // 3. market cap < 100m
 
 (async () => {
-  const rules = [
-    new FilterRule('eps next 5y >= 0%'),
-    new FilterRule('market cap >= 30m'),
-  ];
+  const rules = [new FilterRule('market cap >= 30m')];
   const filter = new SimpleFilter(rules);
 
   const symbols = loadAllSymbols(false);
