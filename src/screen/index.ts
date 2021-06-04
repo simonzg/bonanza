@@ -17,7 +17,6 @@ import {
   descDividend,
   cutOff,
   FarfetchScreenRules,
-  TipRanksStrongBuyScreenRules,
 } from './screenRules';
 export * from './macdScreen';
 
@@ -26,17 +25,7 @@ export const tipranksScreen = async (rawMerged: any[]) => {
   const { accepted, rejected } = filter.matchAll(rawMerged);
   // sort by trUp
   const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('picked-by-tipranks.csv', CSVHeaders, cutOff(sorted, 30));
-  console.log('[Done] screening for tipranks');
-  console.log('-'.repeat(40));
-};
-
-export const tipranksStrongBuyScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(TipRanksStrongBuyScreenRules);
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-  // sort by trUp
-  const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('picked-by-tipranks-strongbuy.csv', CSVHeaders, cutOff(sorted, 30));
+  await writeAnalysisCSV('tiprank-screen.csv', CSVHeaders, sorted);
   console.log('[Done] screening for tipranks');
   console.log('-'.repeat(40));
 };
@@ -48,7 +37,7 @@ export const shortTermBargainScreen = async (rawMerged: any[]) => {
 
   // sort by desc trUp
   const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('picked-by-shortterm-bargain.csv', CSVHeaders, cutOff(sorted, 30));
+  await writeAnalysisCSV('shortterm-bargain-screen.csv', CSVHeaders, cutOff(sorted, 60));
   console.log('[Done] screening for short-term bargain');
   console.log('-'.repeat(40));
 };
@@ -60,7 +49,7 @@ export const longTermBargainScreen = async (rawMerged: any[]) => {
 
   // sort by desc trUp
   const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('picked-by-longterm-bargain.csv', CSVHeaders, cutOff(sorted, 30));
+  await writeAnalysisCSV('longterm-bargain-screen.csv', CSVHeaders, cutOff(sorted, 30));
   console.log('[Done] screening for long-term bargain');
   console.log('-'.repeat(40));
 };
@@ -80,7 +69,7 @@ export const strengthScreen = async (rawMerged: any[]) => {
   // sort by desc strength
   const sorted = accepted.sort(descStrength);
 
-  await writeAnalysisCSV('picked-by-strength.csv', CSVHeaders, cutOff(sorted, 30));
+  await writeAnalysisCSV('strength-screen.csv', CSVHeaders, cutOff(sorted, 50));
   console.log('[Done] screening for strength');
   console.log('-'.repeat(40));
 };
@@ -105,7 +94,7 @@ export const fundamentalScreen = async (rawMerged: any[]) => {
   // sort by desc up
   const sorted = accepted.sort(descUp);
 
-  await writeAnalysisCSV('picked-by-fundamental.csv', CSVHeaders, sorted);
+  await writeAnalysisCSV('fundamental-screen.csv', CSVHeaders, sorted);
   console.log('[Done] screening for fundamental');
   console.log('-'.repeat(40));
 };
@@ -120,7 +109,7 @@ export const dividendScreen = async (rawMerged: any[]) => {
   // sort by desc up
   const sorted = accepted.sort(descDividend);
 
-  await writeAnalysisCSV('picked-by-dividend.csv', CSVHeaders, sorted);
+  await writeAnalysisCSV('dividend-screen.csv', CSVHeaders, sorted);
   console.log('[Done] screening for dividend');
   console.log('-'.repeat(40));
 };
@@ -132,7 +121,7 @@ export const farfetchScreen = async (rawMerged: any[]) => {
   // sort by desc strength
   const sorted = accepted.sort(ascUpEMA60);
 
-  await writeAnalysisCSV('picked-by-farfetch.csv', CSVHeaders, cutOff(sorted, 30));
+  await writeAnalysisCSV('farfetch-screen.csv', CSVHeaders, cutOff(sorted, 50));
   console.log('[Done] screening for farfetch');
   console.log('-'.repeat(40));
 };

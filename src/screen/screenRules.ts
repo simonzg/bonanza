@@ -26,26 +26,17 @@ export const FundementalScreenRules = [
   // new FilterRule('up% > 0%'),
 ];
 
-export const ShortTermBargainScreenRules = [
-  ...CommonScreenRules,
-  new FilterRule('shortTrend > 0%'),
-  new FilterRule('mediumTrend < 0%'),
-  new FilterRule('avg volume > 300k'),
-  new FilterRule('trScore > 5'),
-  new FilterRule('trUp > 8%'),
-];
+export const TipRanksScreenRules = [...CommonScreenRules, new FilterRule('trBuy% > 70%'), new FilterRule('trUp > 5%'), new FilterRule('upMedian > 5%'), new FilterRule('trBuy > 3')];
 
-export const TipRanksStrongBuyScreenRules = [...CommonScreenRules, new FilterRule('trStrongBuy% > 0.5'), new FilterRule('trUp > 5%'), new FilterRule('upMedian > 5%')];
+export const ShortTermBargainScreenRules = [...CommonScreenRules, new FilterRule('shortTrend >= 0%'), new FilterRule('mediumTrend < 0%'), new FilterRule('trBuy% > 45%'), new FilterRule('trUp > 0%')];
 
-export const LongTermBargainScreenRules = [...CommonScreenRules, new FilterRule('shortTrend > 0%'), new FilterRule('longTrend < 0%'), new FilterRule('trBuy > 2'), new FilterRule('trUp > 5%')];
+export const LongTermBargainScreenRules = [...CommonScreenRules, new FilterRule('mediumTrend >= 0%'), new FilterRule('longTrend < 0%'), new FilterRule('trBuy > 2'), new FilterRule('trUp > 5%')];
 
 export const FarfetchScreenRules = [...CommonScreenRules, new FilterRule('upEMA60 < -10%'), new FilterRule('trBuy > 2')];
 
 export const DividendScreenRules = [new FilterRule('dividend % > 2%'), new FilterRule('market cap > 1b'), new FilterRule('trUp > 5%'), new FilterRule('upMedian > 0%')];
 
 export const BasicScreenRules = [...CommonScreenRules, new FilterRule('upMedian > 0%'), new FilterRule('trBuy > 3'), new FilterRule('trScore > 6')];
-
-export const TipRanksScreenRules = [new FilterRule('trScore > 6'), new FilterRule('trBuy > 6'), new FilterRule('trUp > 15%')];
 
 export const descMacd = (a, b) => (a.macd < b.macd ? 1 : -1);
 

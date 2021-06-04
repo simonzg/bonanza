@@ -1,13 +1,9 @@
 import { loadMergedData } from './dataMerger';
 import { loadSectorSymbolsWithSector, loadSymbolsByListing, loadWatchlistSymbolWithCategory } from '../listing';
-import { CSVHeaders, Listing, TiprankHeaders } from '../const';
+import { CSVHeaders, Listing } from '../const';
 import { writeAnalysisCSV } from '../utils';
 
 let headers = CSVHeaders;
-for (const col of TiprankHeaders) {
-  headers.push(col);
-}
-
 export const writeFacts = async (list: Listing) => {
   const symbols = loadSymbolsByListing(list);
   const facts = loadMergedData(symbols);
@@ -52,7 +48,7 @@ export const writeFacts = async (list: Listing) => {
     headers.unshift({ id: 'sector', title: 'sec' });
     headers.unshift({ id: 'symbol', title: 'sym' });
   }
-  const filename = `facts-for-${Listing[list]}.csv`;
+  const filename = `${Listing[list]}-facts.csv`.toLowerCase();
   await writeAnalysisCSV(filename, headers, facts);
   console.log(`[Done] collect facts for ${Listing[list]}`);
   console.log('-'.repeat(40));

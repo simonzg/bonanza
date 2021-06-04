@@ -3,7 +3,8 @@ import { loadAllSymbols, loadWatchlistSymbols } from '../listing';
 import { Listing } from '../const';
 import { writeFacts } from '../analyze/facts';
 import { watchlistTiming } from '../analyze/watchlistTiming';
-import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen, dividendScreen, farfetchScreen, tipranksStrongBuyScreen } from '../screen';
+import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, strengthScreen, macdScreen, tipranksScreen, dividendScreen, farfetchScreen } from '../screen';
+import { sectorAnalyze } from '../analyze/sectorAnalyze';
 
 (async () => {
   const symbols = loadAllSymbols();
@@ -14,6 +15,8 @@ import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, stren
   await watchlistTiming(rawMergedWL);
   console.log(`[Done] timing watchlist`);
 
+  await sectorAnalyze(rawMerged);
+
   await fundamentalScreen(rawMerged);
   await shortTermBargainScreen(rawMerged);
   await longTermBargainScreen(rawMerged);
@@ -21,7 +24,6 @@ import { shortTermBargainScreen, longTermBargainScreen, fundamentalScreen, stren
   await farfetchScreen(rawMerged);
   await macdScreen(rawMerged);
   await tipranksScreen(rawMerged);
-  await tipranksStrongBuyScreen(rawMerged);
   await dividendScreen(rawMerged);
 
   // write facts

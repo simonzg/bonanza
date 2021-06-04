@@ -52,49 +52,39 @@ export const CSVHeaders = [
 
   // fundamentals
   { id: 'industry', title: 'ind' },
+  { id: 'upMedian', title: 'up%' },
+
+  // tipranks
+  { id: 'trUp', title: 'trUp%' },
+  { id: 'trScore', title: 'trScore' },
+  { id: 'trBuy', title: 'nB' },
+  { id: 'trBuy%', title: 'B%' },
+
+  // fundamentals
   { id: 'dividend %', title: 'div%' },
   { id: 'roe', title: 'roe' },
   { id: 'peg', title: 'peg' },
-  { id: 'market cap', title: 'mcap' },
+  { id: 'rsi (14)', title: 'rsi' },
+  { id: 'atr', title: 'atr' },
+  { id: 'sales q/q', title: 'sales q/q' },
+  { id: 'eps q/q', title: 'eps q/q' },
+  { id: 'eps next 5y', title: 'eps>5y' },
+  { id: 'eps past 5y', title: 'eps<5y' },
+  { id: 'closePrice', title: 'p' },
 
   // strength
-  { id: 'price', title: 'p' },
+  { id: 'market cap', title: 'mcap' },
   { id: 'relativeStrength', title: 'relStr' },
   { id: 'shortTrend', title: 'c/s' },
   { id: 'mediumTrend', title: 's/m' },
   { id: 'longTrend', title: 'm/l' },
 
-  // analytics
-  { id: 'upMedian', title: 'up%' },
-  { id: 'upHigh', title: 'uphigh%' },
-
   // momentum
   { id: 'upEMA20', title: 'ema20%' },
   { id: 'upEMA60', title: 'ema60%' },
   { id: 'upEMA120', title: 'ema120%' },
-  { id: 'rsi (14)', title: 'rsi' },
-  { id: 'atr', title: 'atr' },
 
   // performance
   { id: 'rate1m', title: '1m%' },
   { id: 'rate6m', title: '6m%' },
-  { id: 'sales q/q', title: 'sales q/q' },
-
-  // eps performance
-  { id: 'eps q/q', title: 'eps q/q' },
-  { id: 'eps next 5y', title: 'eps>5y' },
-  { id: 'eps past 5y', title: 'eps<5y' },
-
-  { id: 'targetMedian', title: 'tgtM' },
-  { id: 'targetHigh', title: 'tgtH' },
-];
-
-export const TiprankHeaders = [
-  { id: 'trScore', title: 'score' },
-  { id: 'trBuy', title: 'nB' },
-  { id: 'trHold', title: 'nH' },
-  { id: 'trSell', title: 'hS' },
-
-  { id: 'trUp', title: 'trUp%' },
-  { id: 'trUpHigh', title: 'trHigh%' },
 ];
