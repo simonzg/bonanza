@@ -15,6 +15,7 @@ export class TaskExecutorOption {
   proxyFetch?: boolean;
   proxyServers?: string[];
   skipExisting?: boolean;
+  updateInterval?: number;
   extraParams?: { [key: string]: any };
   batchInterval: number; // interval in ms (used for rate limit)
 }
@@ -52,17 +53,9 @@ export class TaskExecutor {
         case Action.fetch:
           // skip existing data
           if (options.skipExisting) {
-            const content = readData(
-              Source[options.source],
-              options.model,
-              symbol
-            );
+            const content = readData(Source[options.source], options.model, symbol);
             if (content && content.length > 0) {
-              console.log(
-                `skip ${symbol} due to existing ${options.model} data from ${
-                  Source[options.source]
-                }`
-              );
+              console.log(`skip ${symbol} due to existing ${options.model} data from ${Source[options.source]}`);
               continue;
             }
           }
@@ -84,12 +77,7 @@ export class TaskExecutor {
                 this.tasks.push(new FetchTask(taskOption));
             }
           } else {
-            this.tasks.push(
-              new ProxyFetchTask(
-                taskOption,
-                this.servers[index % this.servers.length]
-              )
-            );
+            this.tasks.push(new ProxyFetchTask(taskOption, this.servers[index % this.servers.length]));
           }
       }
       index++;
