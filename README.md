@@ -6,9 +6,13 @@ Data crawler for popular stock analytics/facts websites, includes: finviz, finnh
 
 `npm install`
 
-## Fetch all data
+## Fetch daily data
 
-`npm run fetchall`
+`npm run daily`
+
+## Fetch weekly data
+
+`npm run weekly`
 
 ## Interactive CLI
 

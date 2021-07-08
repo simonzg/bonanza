@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/main.ts",
     "server": "ts-node src/server.ts",
-    "fetchall": "ts-node src/cmd/fetchAll.ts",
+    "daily": "ts-node src/cmd/fetchDaily.ts",
+    "weekly": "ts-node src/cmd/fetchWeekly.ts",
     "ignore": "ts-node src/cmd/updateIgnored.ts",
     "analyze": "ts-node src/cmd/analyze.ts",
     "profile": "ts-node src/cmd/profile.ts",
