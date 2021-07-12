@@ -1,8 +1,5 @@
-import inquirer from 'inquirer';
-import { loadFinnhubAccounts } from '../config';
 import { loadAllSymbols } from '../listing';
-import { TaskExecutor, TaskExecutorOption } from '../task/taskExecutor';
-import { Listing, Action, Source } from '../const';
+import { Action, Source } from '../const';
 import { runCmd } from './utils';
 
 const fetchFinnhubDaily = async (symbols: string[]) => {

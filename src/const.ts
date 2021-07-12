@@ -63,6 +63,7 @@ export const CSVHeaders = [
   // fundamentals
   { id: 'dividend %', title: 'div%' },
   { id: 'roe', title: 'roe' },
+  { id: 'p/e', title: 'p/e' },
   { id: 'peg', title: 'peg' },
   { id: 'rsi (14)', title: 'rsi' },
   { id: 'atr', title: 'atr' },

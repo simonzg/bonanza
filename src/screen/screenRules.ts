@@ -26,7 +26,18 @@ export const FundementalScreenRules = [
   // new FilterRule('up% > 0%'),
 ];
 
-export const TipRanksScreenRules = [...CommonScreenRules, new FilterRule('trBuy% > 70%'), new FilterRule('trUp > 5%'), new FilterRule('upMedian > 5%'), new FilterRule('trBuy > 3')];
+export const TipRanksScreenRules = [
+  ...CommonScreenRules,
+  new FilterRule('trBuy% > 70%'),
+  new FilterRule('trUp > 5%'),
+  new FilterRule('upMedian > 5%'),
+  new FilterRule('trBuy > 3'),
+  new FilterRule('trScore >= 6'),
+  new FilterRule('roe > -40%'),
+  new FilterRule('eps next 5y >= 0%'),
+  new FilterRule('eps past 5y >= 0%'),
+  new FilterRule('eps q/q >= 0%'),
+];
 
 export const ShortTermBargainScreenRules = [...CommonScreenRules, new FilterRule('shortTrend >= 0%'), new FilterRule('mediumTrend < 0%'), new FilterRule('trBuy% > 45%'), new FilterRule('trUp > 0%')];
 
@@ -38,6 +49,10 @@ export const DividendScreenRules = [new FilterRule('dividend % > 2%'), new Filte
 
 export const BasicScreenRules = [...CommonScreenRules, new FilterRule('upMedian > 0%'), new FilterRule('trBuy > 3'), new FilterRule('trScore > 6')];
 
+export const PEScreenRules = [...CommonScreenRules, new FilterRule('p/e < 15'), new FilterRule('p/e > 0'), new FilterRule('trUp > 0%'), new FilterRule('upMedian > 0%')];
+
+export const PEGScreenRules = [...CommonScreenRules, new FilterRule('peg < 4'), new FilterRule('peg > 0'), new FilterRule('trUp > 0%'), new FilterRule('upMedian > 0%')];
+
 export const descMacd = (a, b) => (a.macd < b.macd ? 1 : -1);
 
 export const descTrScore = (a, b) => (b.trScore < a.trScore ? 1 : -1);
@@ -46,14 +61,19 @@ export const descUp = (a, b) => (parseInt(a['up']) < parseInt(b['up']) ? 1 : -1)
 
 export const descTrUp = (a, b) => (parseInt(a['trUp']) < parseInt(b['trUp']) ? 1 : -1);
 
-export const descTrBuy = (a, b) => (parseInt(a['trBuy']) < parseInt(b['trBuy']) ? 1 : -1);
+export const descTrBuy = (a, b) => (parseInt(a['trBuy%']) == parseInt(b['trBuy%']) ? (parseInt(a['trBuy']) < parseInt(b['trBuy']) ? 1 : -1) : parseInt(a['trBuy%']) < parseInt(b['trBuy%']) ? 1 : -1);
 
 export const descStrength = (a, b) => (parseInt(a['relativeStrength']) < parseInt(b['relativeStrength']) ? 1 : -1);
 
 export const descUpEMA60 = (a, b) => (parseInt(a['upEMA60']) < parseInt(b['upEMA60']) ? 1 : -1);
+
 export const ascUpEMA60 = (a, b) => (parseInt(a['upEMA60']) > parseInt(b['upEMA60']) ? 1 : -1);
 
 export const descDividend = (a, b) => (parseFloat(a['dividend %']) < parseFloat(b['dividend %']) ? 1 : -1);
+
+export const ascPE = (a, b) => (parseFloat(a['p/e']) > parseInt(b['p/e']) ? 1 : -1);
+
+export const ascPeg = (a, b) => (parseFloat(a['peg']) > parseInt(b['peg']) ? 1 : -1);
 
 export const cutOff = (list, num) => {
   if (list instanceof Array) {

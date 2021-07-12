@@ -17,6 +17,10 @@ import {
   descDividend,
   cutOff,
   FarfetchScreenRules,
+  PEScreenRules,
+  PEGScreenRules,
+  ascPE,
+  ascPeg,
 } from './screenRules';
 export * from './macdScreen';
 
@@ -123,5 +127,29 @@ export const farfetchScreen = async (rawMerged: any[]) => {
 
   await writeAnalysisCSV('farfetch-screen.csv', CSVHeaders, cutOff(sorted, 50));
   console.log('[Done] screening for farfetch');
+  console.log('-'.repeat(40));
+};
+
+export const peScreen = async (rawMerged: any[]) => {
+  const filter = new SimpleFilter(PEScreenRules);
+  const { accepted, rejected } = filter.matchAll(rawMerged);
+
+  // sort by desc strength
+  const sorted = accepted.sort(ascPE);
+
+  await writeAnalysisCSV('pe-screen.csv', CSVHeaders, cutOff(sorted, 100));
+  console.log('[Done] screening for P/E');
+  console.log('-'.repeat(40));
+};
+
+export const pegScreen = async (rawMerged: any[]) => {
+  const filter = new SimpleFilter(PEGScreenRules);
+  const { accepted, rejected } = filter.matchAll(rawMerged);
+
+  // sort by desc strength
+  const sorted = accepted.sort(ascPeg);
+
+  await writeAnalysisCSV('peg-screen.csv', CSVHeaders, cutOff(sorted, 100));
+  console.log('[Done] screening for peg');
   console.log('-'.repeat(40));
 };
