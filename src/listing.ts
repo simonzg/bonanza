@@ -3,14 +3,11 @@ import * as nasdaq100 from '../config/listing/NDX.json';
 import * as sp500 from '../config/listing/SP500.json';
 import * as dji30 from '../config/listing/DJI.json';
 import * as ignored from '../config/listing/ignored.json';
-import * as pool from '../config/listing/pool.json';
 import * as nyse from '../config/listing/nyse.json';
 import * as nasdaq from '../config/listing/nasdaq.json';
-import * as temporary from '../config/listing/temporary.json';
 import * as portfolio from '../config/listing/portfolio.json';
 import * as watchlist from '../config/listing/watchlist.json';
 import * as sectors from '../config/listing/sectors.json';
-import { symlink, watch } from 'fs';
 
 export const loadSectorSymbols = (): string[] => {
   let symbols = [];
@@ -20,20 +17,6 @@ export const loadSectorSymbols = (): string[] => {
     }
   }
   return symbols;
-};
-
-export const loadPoolSymbols = (): string[] => {
-  let symbols: { [key: string]: boolean } = {};
-  for (const sector of Object.values(pool)) {
-    for (const symList of Object.values(sector)) {
-      if (symList instanceof Array) {
-        for (const sym of symList) {
-          symbols[sym] = true;
-        }
-      }
-    }
-  }
-  return Object.keys(symbols);
 };
 
 export const loadWatchlistSymbols = (): string[] => {
@@ -84,14 +67,8 @@ export const loadSymbolsByListing = (ex: Listing): string[] => {
     case Listing.Portfolio:
       symbols = portfolio.symbols;
       break;
-    case Listing.Temporary:
-      symbols = temporary.symbols;
-      break;
     case Listing.Watchlist:
       symbols = loadWatchlistSymbols();
-      break;
-    case Listing.Pool:
-      symbols = loadPoolSymbols();
       break;
     case Listing.Sectors:
       symbols = loadSectorSymbols();
@@ -117,21 +94,9 @@ export const loadSymbolsByListing = (ex: Listing): string[] => {
 export const loadAllSymbols = (filter = true) => {
   const nasdaqSymbols = nasdaq.symbols;
   const nyseSymbols = nyse.symbols;
-  const poolSymbols = loadPoolSymbols();
   const watchlistSymbols = loadWatchlistSymbols();
   const portfolioSymbols = portfolio.symbols;
-  const temporarySymbols = temporary.symbols;
-  const symbolsSet = new Set(
-    nasdaqSymbols
-      .concat(nyseSymbols)
-      .concat(poolSymbols)
-      .concat(watchlistSymbols)
-      .concat(temporarySymbols)
-      .concat(portfolioSymbols)
-      .concat(dji30.constituents)
-      .concat(nasdaq100.constituents)
-      .concat(sp500.constituents)
-  );
+  const symbolsSet = new Set(nasdaqSymbols.concat(nyseSymbols).concat(watchlistSymbols).concat(portfolioSymbols).concat(dji30.constituents).concat(nasdaq100.constituents).concat(sp500.constituents));
   const symbols = [...symbolsSet];
   const originLen = symbols.length;
 

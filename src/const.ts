@@ -88,4 +88,8 @@ export const CSVHeaders = [
   // performance
   { id: 'rate1m', title: '1m%' },
   { id: 'rate6m', title: '6m%' },
+
+  // update info
+  { id: 'lastUpdated', title: 'lastUpdated' },
+  { id: 'outdated', title: 'outdated' },
 ];

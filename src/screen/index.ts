@@ -2,16 +2,16 @@ import { CSVHeaders } from '../const';
 import { writeAnalysisCSV } from '../utils';
 import { SimpleFilter } from '../analyze/simpleFilter';
 import {
+  CommonScreenRules,
   StrenthScreenRules,
   TipRanksScreenRules,
   ShortTermBargainScreenRules,
   LongTermBargainScreenRules,
+  LongArrayScrrenRules,
   FundementalScreenRules,
   DividendScreenRules,
   descUp,
   descStrength,
-  ascUpEMA60,
-  descTrScore,
   descTrBuy,
   descTrUp,
   descDividend,
@@ -21,135 +21,84 @@ import {
   PEGScreenRules,
   ascPE,
   ascPeg,
+  PositiveUpRules,
+  ShortArrayScrrenRules,
+  TrScore6Rules,
+  OutdatedScreenRules,
+  WeeklyTrendLongScreenRules,
+  BargainLongTermScreenRules,
 } from './screenRules';
+import { PlungeFilter } from '../analyze/plungeFilter';
+import { SkyrocketFilter } from '../analyze/skyrocketFilter';
+import internal from 'stream';
 export * from './macdScreen';
+import { FilterRule } from '../analyze/simpleFilter';
 
-export const tipranksScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(TipRanksScreenRules);
+const standardScreen = async (name: string, rawMerged: any[], sortCriteria: (a: any, b: any) => number, cutOffCount: number, ...rules: FilterRule[]) => {
+  const filter = new SimpleFilter(...rules);
   const { accepted, rejected } = filter.matchAll(rawMerged);
-  // sort by trUp
-  const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('tiprank-screen.csv', CSVHeaders, sorted);
-  console.log('[Done] screening for tipranks');
+
+  const sorted = accepted.sort(sortCriteria);
+  const filename = name.toLowerCase().replace(' ', '-');
+  let result = sorted;
+  if (cutOffCount > 0) {
+    result = cutOff(result, cutOffCount);
+  }
+  await writeAnalysisCSV(`${filename}.csv`, CSVHeaders, result);
+  console.log(`[Done] screening for ${name}`);
   console.log('-'.repeat(40));
 };
 
-export const shortTermBargainScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(ShortTermBargainScreenRules);
-
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // sort by desc trUp
-  const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('shortterm-bargain-screen.csv', CSVHeaders, cutOff(sorted, 60));
-  console.log('[Done] screening for short-term bargain');
-  console.log('-'.repeat(40));
+export const bestScreen = async (rawMerged: any[]) => {
+  const cutOffCount = 100;
+  standardScreen('best-tipranks', rawMerged, descTrBuy, cutOffCount, ...TipRanksScreenRules);
+  standardScreen('best-strength', rawMerged, descStrength, cutOffCount, ...StrenthScreenRules);
+  standardScreen('best-fundamental', rawMerged, descUp, cutOffCount, ...FundementalScreenRules);
+  standardScreen('best-dividend', rawMerged, descDividend, cutOffCount, ...DividendScreenRules);
+  standardScreen('best-pe', rawMerged, ascPE, cutOffCount, ...PEScreenRules);
+  standardScreen('best-peg', rawMerged, ascPeg, cutOffCount, ...PEGScreenRules);
 };
 
-export const longTermBargainScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(LongTermBargainScreenRules);
-
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // sort by desc trUp
-  const sorted = accepted.sort(descTrBuy);
-  await writeAnalysisCSV('longterm-bargain-screen.csv', CSVHeaders, cutOff(sorted, 30));
-  console.log('[Done] screening for long-term bargain');
-  console.log('-'.repeat(40));
+export const bargainScreen = async (rawMerged: any[]) => {
+  standardScreen('bargain-shortterm', rawMerged, descTrUp, 0, ...ShortTermBargainScreenRules);
+  standardScreen('bargain-longterm', rawMerged, descTrUp, 0, ...BargainLongTermScreenRules);
+  standardScreen('bargain-farfetch', rawMerged, descTrUp, 0, ...FarfetchScreenRules);
 };
 
-export const strengthScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(StrenthScreenRules);
+export const trendScreen = async (rawMerged: any[]) => {
+  standardScreen('trend-long', rawMerged, descTrUp, 0, ...LongArrayScrrenRules);
+  standardScreen('trend-short', rawMerged, descTrUp, 0, ...ShortArrayScrrenRules);
+  standardScreen('trend-weekly-long', rawMerged, descTrUp, 0, ...WeeklyTrendLongScreenRules);
+};
+
+export const outdatedScreen = async (rawMerged: any[]) => {
+  standardScreen('facts-outdated', rawMerged, descTrUp, 0, ...OutdatedScreenRules);
+};
+
+export const plungeScreen = async (rawMerged: any[], plungePct: number, withinDays: number) => {
+  const filter = new PlungeFilter(withinDays, plungePct);
   const { accepted, rejected } = filter.matchAll(rawMerged);
-  //   writeAnalysisCSV(
-  //     'rejected-by-strength.csv',
-  //     [
-  //       { id: 'symbol', title: 'Symbol' },
-  //       { id: 'rejectReason', title: 'Reject Reason' },
-  //     ],
-  //     rejected
-  //   );
+  const simpleFilter = new SimpleFilter(...CommonScreenRules, ...TrScore6Rules);
+  const secondResult = simpleFilter.matchAll(accepted);
 
   // sort by desc strength
-  const sorted = accepted.sort(descStrength);
+  const sorted = secondResult.accepted.sort(descTrUp);
 
-  await writeAnalysisCSV('strength-screen.csv', CSVHeaders, cutOff(sorted, 50));
-  console.log('[Done] screening for strength');
+  await writeAnalysisCSV('bargain-plummet.csv', CSVHeaders, cutOff(sorted, 100));
+  console.log(`[Done] screening for plunge > ${plungePct * 100}% in ${withinDays} days`);
   console.log('-'.repeat(40));
 };
 
-export const fundamentalScreen = async (rawMerged: any[]) => {
-  // for debug
-  // writeAnalysisJSON('raw-merged.json', rawMerged);
-
-  const filter = new SimpleFilter(FundementalScreenRules);
+export const skyrocketScreen = async (rawMerged: any[], rocketPct: number, withinDays: number) => {
+  const filter = new SkyrocketFilter(withinDays, rocketPct);
   const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // for debug
-  // writeAnalysisCSV(
-  //   'rejected-by-fundamental.csv',
-  //   [
-  //     { id: 'symbol', title: 'Symbol' },
-  //     { id: 'rejectReason', title: 'Reject Reason' },
-  //   ],
-  //   rejected
-  // );
-
-  // sort by desc up
-  const sorted = accepted.sort(descUp);
-
-  await writeAnalysisCSV('fundamental-screen.csv', CSVHeaders, sorted);
-  console.log('[Done] screening for fundamental');
-  console.log('-'.repeat(40));
-};
-
-export const dividendScreen = async (rawMerged: any[]) => {
-  // for debug
-  // writeAnalysisJSON('raw-merged.json', rawMerged);
-
-  const filter = new SimpleFilter(DividendScreenRules);
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // sort by desc up
-  const sorted = accepted.sort(descDividend);
-
-  await writeAnalysisCSV('dividend-screen.csv', CSVHeaders, sorted);
-  console.log('[Done] screening for dividend');
-  console.log('-'.repeat(40));
-};
-
-export const farfetchScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(FarfetchScreenRules);
-  const { accepted, rejected } = filter.matchAll(rawMerged);
+  const simpleFilter = new SimpleFilter(...CommonScreenRules, ...TrScore6Rules);
+  const secondResult = simpleFilter.matchAll(accepted);
 
   // sort by desc strength
-  const sorted = accepted.sort(ascUpEMA60);
+  const sorted = secondResult.accepted.sort(descTrUp);
 
-  await writeAnalysisCSV('farfetch-screen.csv', CSVHeaders, cutOff(sorted, 50));
-  console.log('[Done] screening for farfetch');
-  console.log('-'.repeat(40));
-};
-
-export const peScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(PEScreenRules);
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // sort by desc strength
-  const sorted = accepted.sort(ascPE);
-
-  await writeAnalysisCSV('pe-screen.csv', CSVHeaders, cutOff(sorted, 100));
-  console.log('[Done] screening for P/E');
-  console.log('-'.repeat(40));
-};
-
-export const pegScreen = async (rawMerged: any[]) => {
-  const filter = new SimpleFilter(PEGScreenRules);
-  const { accepted, rejected } = filter.matchAll(rawMerged);
-
-  // sort by desc strength
-  const sorted = accepted.sort(ascPeg);
-
-  await writeAnalysisCSV('peg-screen.csv', CSVHeaders, cutOff(sorted, 100));
-  console.log('[Done] screening for peg');
+  await writeAnalysisCSV('bargain-skyrocket.csv', CSVHeaders, cutOff(sorted, 100));
+  console.log(`[Done] screening for skyrocket > ${rocketPct * 100}% in ${withinDays} days`);
   console.log('-'.repeat(40));
 };

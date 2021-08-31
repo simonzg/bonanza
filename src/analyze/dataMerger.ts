@@ -95,6 +95,39 @@ export const loadMergedData = (symbols: string[]) => {
         const price1y = Number(candle.c[candle.c.length - 354]);
         rate1y = formatPercent((closePrice - price1y) / price1y);
       }
+      let outdated = true;
+      let lastUpdated = 'unknown';
+      if (candle.t && candle.t.length > 0) {
+        const lastTs = Number(candle.t[candle.t.length - 1]);
+        const updatedAt = new Date(lastTs * 1000);
+        const curTs = Math.floor(new Date().getTime() / 1000);
+        outdated = curTs - lastTs > 3 * 24 * 3600;
+        lastUpdated = updatedAt.toLocaleDateString('en-US');
+      }
+
+      let weeklyCloses = [];
+      for (const [i, v] of candle.c.entries()) {
+        if (i > candle.t.length - 1) {
+          console.log('not enough data in timestamp for ', symbol);
+          break;
+        }
+        const ts = new Date(Number(candle.t[i]) * 1000);
+        const day = ts.getDay();
+        if (day === 5) {
+          // only collect data on Friday
+          weeklyCloses.push(v);
+        }
+      }
+
+      // EMA weekly
+      const emaWeekly5Series = EMA.calculate({ period: 5, values: weeklyCloses });
+      const emaWeekly5 = emaWeekly5Series[emaWeekly5Series.length - 1];
+      const emaWeekly20Series = EMA.calculate({ period: 20, values: weeklyCloses });
+      const emaWeekly20 = emaWeekly20Series[emaWeekly20Series.length - 1];
+      const emaWeekly40Series = EMA.calculate({ period: 40, values: weeklyCloses });
+      const emaWeekly40 = emaWeekly40Series[emaWeekly40Series.length - 1];
+
+      const last30Candles = candle.c.slice(-30);
 
       // EMA
       const last2Close = candle.c[candle.c.length - 2];
@@ -157,6 +190,11 @@ export const loadMergedData = (symbols: string[]) => {
         targetMedian,
         targetLow,
 
+        lastUpdated,
+        outdated,
+
+        last30Candles,
+
         // percent towards target prices
         upLow: formatPercent((targetLow - closePrice) / closePrice),
         upMedian: formatPercent((targetMedian - closePrice) / closePrice),
@@ -181,6 +219,13 @@ export const loadMergedData = (symbols: string[]) => {
         ema20,
         ema60,
         ema120,
+        emaWeekly5,
+        emaWeekly20,
+        emaWeekly40,
+        upEMAWeekly5: formatPercent((closePrice - emaWeekly5) / emaWeekly5),
+        upEMAWeekly20: formatPercent((closePrice - emaWeekly20) / emaWeekly20),
+        upEMAWeekly40: formatPercent((closePrice - emaWeekly40) / emaWeekly40),
+
         relativeStrength: formatPercent(relativeStrength), // relative strength to SP500
         shortTrend: formatPercent((closePrice - ema20) / ema20), // short term trend strength
         mediumTrend: formatPercent((ema20 - ema60) / ema60), // medium term trend strength

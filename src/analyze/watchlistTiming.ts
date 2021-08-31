@@ -9,7 +9,7 @@ export const watchlistTiming = async (rawMerged: any[]) => {
   const rules = [
     new FilterRule('rsi (14) < 50'), // rsi < 50
   ];
-  const filter = new SimpleFilter(rules);
+  const filter = new SimpleFilter(...rules);
 
   const accepted = [];
   const rejected = [];

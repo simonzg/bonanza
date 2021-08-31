@@ -10,7 +10,7 @@ import { loadMergedData } from '../analyze/dataMerger';
 
 (async () => {
   const rules = [new FilterRule('market cap >= 30m')];
-  const filter = new SimpleFilter(rules);
+  const filter = new SimpleFilter(...rules);
 
   const symbols = loadAllSymbols(false);
   const rawMerged = loadMergedData(symbols);

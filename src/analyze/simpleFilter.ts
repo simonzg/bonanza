@@ -7,13 +7,30 @@ export class FilterRule {
   target: string;
   value: string;
   constructor(rule: string) {
-    const items = rule.split(' ');
-    if (items.length < 3) {
-      throw new Error('invalid format for finviz rule');
+    // dividend % > 3%
+    // ---------- | --
+    //  field    op  target
+
+    // emaWeekly20 > emaWeekly60
+    // ----------- | -----------
+    //    field    op   target
+
+    const supportedOps = ['>=', '<=', '>', '=', '<'];
+    for (const op of supportedOps) {
+      if (rule.includes(op)) {
+        const items = rule.split(op);
+        if (items.length != 2) {
+          throw new Error('invalid format for finviz rule');
+        }
+        this.op = op;
+        this.field = items[0].trim();
+        this.target = items[1].trim();
+        break;
+      }
     }
-    this.field = items.slice(0, items.length - 2).join(' ');
-    this.op = items[items.length - 2];
-    this.target = items[items.length - 1];
+    if (!this.op) {
+      throw new Error('invalid format, no op found');
+    }
     this.value = '';
   }
 
@@ -25,7 +42,7 @@ export class FilterRule {
       return false;
     }
 
-    const target = this.target;
+    const target = String(data[this.target] || this.target);
     const value = String(data[this.field]);
     this.value = value;
     // console.log(
@@ -83,7 +100,9 @@ export class FilterRule {
           result = valNum >= tgtNum;
           break;
       }
-
+      // if (value.includes('-')) {
+      //   console.log(`VAL: ${value}, OP: ${this.op}, TARGET: ${target}, result: ${result}`);
+      // }
       return result;
     } catch (e) {
       return false;
@@ -97,7 +116,7 @@ export class FilterRule {
 
 export class SimpleFilter extends Filter {
   rules: FilterRule[];
-  constructor(rules: FilterRule[]) {
+  constructor(...rules: FilterRule[]) {
     super();
     this.rules = rules;
   }

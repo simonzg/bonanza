@@ -60,7 +60,7 @@ export const macdScreen = async (rawMerged: any[]) => {
 
   let headers = CSVHeaders;
   headers.push({ id: 'macd', title: 'macd' }, { id: 'expand', title: 'ex' });
-  const filter = new SimpleFilter(BasicScreenRules);
+  const filter = new SimpleFilter(...BasicScreenRules);
   const res = filter.matchAll(accepted);
   const sorted = res.accepted.sort(descMacd);
 

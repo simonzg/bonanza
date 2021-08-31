@@ -48,7 +48,7 @@ export const writeFacts = async (list: Listing) => {
     headers.unshift({ id: 'sector', title: 'sec' });
     headers.unshift({ id: 'symbol', title: 'sym' });
   }
-  const filename = `${Listing[list]}-facts.csv`.toLowerCase();
+  const filename = `facts-${Listing[list]}.csv`.toLowerCase();
   await writeAnalysisCSV(filename, headers, facts);
   console.log(`[Done] collect facts for ${Listing[list]}`);
   console.log('-'.repeat(40));
