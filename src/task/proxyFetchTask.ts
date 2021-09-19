@@ -20,20 +20,19 @@ export class ProxyFetchTask extends Task {
     console.log(`Exec fetch: ${this.name} with ${this.url}`);
     ensureDataDirectory(this.source, this.model);
     try {
-      const res = await axios.post(this.proxyUrl, {
-        source: this.source,
-        model: this.model,
-        symbol: this.symbol,
-        url: this.url,
-        output: false,
-      });
+      const res = await axios.post(
+        this.proxyUrl,
+        {
+          source: this.source,
+          model: this.model,
+          symbol: this.symbol,
+          url: this.url,
+          output: false,
+        },
+        { timeout: 3000 }
+      );
       if (res.status != 200) {
-        console.log(
-          'fetch failed for: ',
-          this.proxyUrl,
-          'with error: ',
-          res.status
-        );
+        console.log('fetch failed for: ', this.proxyUrl, 'with error: ', res.status);
       }
       this.data = await this.processRaw(res.data);
       writeData(this.source, this.model, this.symbol, this.data);

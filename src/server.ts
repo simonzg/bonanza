@@ -6,6 +6,7 @@ import { PROXY_PORT } from './config';
 import { TaskOption, Task } from './task/task';
 import { FetchTask } from './task/fetchTask';
 import { FinvizFetchTask } from './task/finvizFetchTask';
+import { version } from '../package.json';
 
 const app = express();
 const port = PROXY_PORT; // default port to listen
@@ -16,6 +17,10 @@ app.use(bodyParser.json());
 // define a route handler for the default home page
 app.get('/hello', (req: express.Request, res: express.Response) => {
   res.send('Hello world!');
+});
+
+app.get('/version', (req: express.Request, res: express.Response) => {
+  res.send(version);
 });
 
 app.post('/fetch', async (req: express.Request, res: express.Response) => {

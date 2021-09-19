@@ -138,6 +138,8 @@ export const loadMergedData = (symbols: string[]) => {
       const ema60 = ema60Series[ema60Series.length - 1];
       const ema120Series = EMA.calculate({ period: 120, values: candle.c });
       const ema120 = ema120Series[ema120Series.length - 1];
+      const ema200Series = EMA.calculate({ period: 200, values: candle.c });
+      const ema200 = ema200Series[ema200Series.length - 1];
       let relativeStrength = (rate1d - sp500Rate) / sp500Rate;
       if (sp500Rate < 0) {
         relativeStrength *= -1;
@@ -235,6 +237,7 @@ export const loadMergedData = (symbols: string[]) => {
         upEMA20: formatPercent((closePrice - ema20) / ema20),
         upEMA60: formatPercent((closePrice - ema60) / ema60),
         upEMA120: formatPercent((closePrice - ema120) / ema120),
+        upEMA200: formatPercent((closePrice - ema200) / ema200),
 
         ...finviz,
 

@@ -42,13 +42,29 @@ export const TipRanksScreenRules = [
   new FilterRule('eps q/q >= 0%'),
 ];
 
-export const WeeklyTrendLongScreenRules = [...CommonScreenRules, new FilterRule('emaWeekly5 >= emaWeekly20'), new FilterRule('emaWeekly20 >= emaWeekly40')];
+export const BargainCommonScreenRules = [new FilterRule('avg volume > 300k'), new FilterRule('market cap > 1b'), new FilterRule('trScore > 6')];
 
-export const ShortTermBargainScreenRules = [...CommonScreenRules, new FilterRule('shortTrend >= 0%'), new FilterRule('mediumTrend < 0%'), new FilterRule('trBuy% > 45%'), new FilterRule('trUp > 0%')];
+export const WeeklyTrendLongScreenRules = [...BargainCommonScreenRules, new FilterRule('emaWeekly5 >= emaWeekly20'), new FilterRule('emaWeekly20 >= emaWeekly40')];
 
-export const LongTermBargainScreenRules = [...CommonScreenRules, new FilterRule('mediumTrend >= 0%'), new FilterRule('longTrend < 0%'), new FilterRule('trBuy > 2'), new FilterRule('trUp > 5%')];
+export const ShortTermBargainScreenRules = [
+  ...BargainCommonScreenRules,
+  new FilterRule('shortTrend >= 0%'),
+  new FilterRule('mediumTrend < 0%'),
+  new FilterRule('trBuy% > 45%'),
+  new FilterRule('trUp > 0%'),
+];
+
+export const LongTermBargainScreenRules = [
+  ...BargainCommonScreenRules,
+  new FilterRule('mediumTrend >= 0%'),
+  new FilterRule('longTrend < 0%'),
+  new FilterRule('trBuy > 2'),
+  new FilterRule('trUp > 5%'),
+];
 
 export const BargainLongTermScreenRules = [...WeeklyTrendLongScreenRules, new FilterRule('upEMAWeekly20 <= 3%'), new FilterRule('upEMAWeekly20 >= -5%'), new FilterRule('upEMAWeekly40 >= 0%')];
+
+export const EMA200ScreenRules = [...CommonScreenRules, new FilterRule('upEMA200 <= 3%'), new FilterRule('upEMA200 >= -3%')];
 
 export const OutdatedScreenRules = [...CommonScreenRules, new FilterRule('outdated = true')];
 

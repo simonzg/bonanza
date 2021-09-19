@@ -1,8 +1,9 @@
-import { loadFinnhubAccounts } from '../config';
+import { loadFinnhubAccounts, loadRemoteServers } from '../config';
 import { TaskExecutor, TaskExecutorOption } from '../task/taskExecutor';
 import { Action, Source } from '../const';
 
 export const runCmd = async (action: Action, source: Source, models: string[], symbols: string[], proxyFetch: boolean, skipExisting: boolean) => {
+  const servers = await loadRemoteServers();
   for (const model of models) {
     let options: TaskExecutorOption = {
       action,
@@ -20,7 +21,7 @@ export const runCmd = async (action: Action, source: Source, models: string[], s
       options.extraParams['tokens'] = tokens;
     }
 
-    let executor = new TaskExecutor(options);
+    let executor = new TaskExecutor(servers, options);
     await executor.executeAll();
   }
 };

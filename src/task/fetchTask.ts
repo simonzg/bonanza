@@ -19,7 +19,7 @@ export class FetchTask extends Task {
     console.log(`Exec fetch: ${this.name} with ${this.url}`);
     ensureDataDirectory(this.source, this.model);
     try {
-      const res = await axios.get(this.url);
+      const res = await axios.get(this.url, { timeout: 3000 });
       if (res.status != 200) {
         console.log('fetch failed for: ', this.url, 'with error: ', res.status);
       }

@@ -31,9 +31,9 @@ export class TaskExecutor {
   options: TaskExecutorOption;
   servers: any[];
 
-  constructor(options: TaskExecutorOption) {
+  constructor(servers: { name: string; ip: string }[], options: TaskExecutorOption) {
     this.options = options;
-    this.servers = loadRemoteServers();
+    this.servers = servers;
     let index = 0;
     for (const [i, symbol] of options.symbols.entries()) {
       let taskOption: TaskOption = {

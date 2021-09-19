@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
-import { getModelNames, loadFinnhubAccounts } from './config';
+import { getModelNames, loadFinnhubAccounts, loadRemoteServers } from './config';
 import { loadSymbolsByListing } from './listing';
 import { TaskExecutor, TaskExecutorOption } from './task/taskExecutor';
 import { Listing, Action, Source, enumKeys, toListing, toAction, toSource } from './const';
@@ -86,6 +86,7 @@ import { Listing, Action, Source, enumKeys, toListing, toAction, toSource } from
 })();
 
 const runCmd = async (action: Action, source: Source, models: string[], symbols: string[], proxyFetch: boolean, skipExisting: boolean) => {
+  const servers = await loadRemoteServers();
   for (const model of models) {
     let options: TaskExecutorOption = {
       action,
@@ -103,7 +104,7 @@ const runCmd = async (action: Action, source: Source, models: string[], symbols:
       options.extraParams['tokens'] = tokens;
     }
 
-    let executor = new TaskExecutor(options);
+    let executor = new TaskExecutor(servers, options);
     await executor.executeAll();
   }
 };
