@@ -29,7 +29,7 @@ export class ProxyFetchTask extends Task {
           url: this.url,
           output: false,
         },
-        { timeout: 3000 }
+        { timeout: 10000 }
       );
       if (res.status != 200) {
         console.log('fetch failed for: ', this.proxyUrl, 'with error: ', res.status);
