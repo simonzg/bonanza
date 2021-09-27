@@ -28,6 +28,7 @@ import {
   WeeklyTrendLongScreenRules,
   BargainLongTermScreenRules,
   EMA200ScreenRules,
+  TrUpLowRules,
 } from './screenRules';
 import { PlungeFilter } from '../analyze/plungeFilter';
 import { SkyrocketFilter } from '../analyze/skyrocketFilter';
@@ -65,6 +66,7 @@ export const bargainScreen = async (rawMerged: any[]) => {
   standardScreen('bargain-longterm', rawMerged, descTrUp, 0, ...BargainLongTermScreenRules);
   standardScreen('bargain-farfetch', rawMerged, descTrUp, 0, ...FarfetchScreenRules);
   standardScreen('bargain-ema200', rawMerged, descTrUp, 0, ...EMA200ScreenRules);
+  standardScreen('bargain-upLow', rawMerged, descTrUp, 0, ...TrUpLowRules);
 };
 
 export const trendScreen = async (rawMerged: any[]) => {

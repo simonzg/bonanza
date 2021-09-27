@@ -64,7 +64,8 @@ export const LongTermBargainScreenRules = [
 
 export const BargainLongTermScreenRules = [...WeeklyTrendLongScreenRules, new FilterRule('upEMAWeekly20 <= 3%'), new FilterRule('upEMAWeekly20 >= -5%'), new FilterRule('upEMAWeekly40 >= 0%')];
 
-export const EMA200ScreenRules = [...CommonScreenRules, new FilterRule('upEMA200 <= 3%'), new FilterRule('upEMA200 >= -3%')];
+export const EMA200ScreenRules = [...CommonScreenRules, new FilterRule('upEMA200 <= 3%')];
+export const TrUpLowRules = [...CommonScreenRules, new FilterRule('trUpLow >= 1%')];
 
 export const OutdatedScreenRules = [...CommonScreenRules, new FilterRule('outdated = true')];
 

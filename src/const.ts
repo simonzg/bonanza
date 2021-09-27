@@ -56,6 +56,7 @@ export const CSVHeaders = [
 
   // tipranks
   { id: 'trUp', title: 'trUp%' },
+  { id: 'trUpLow', title: 'trUpLow%' },
   { id: 'trScore', title: 'trScore' },
   { id: 'trBuy', title: 'nB' },
   { id: 'trBuy%', title: 'B%' },
