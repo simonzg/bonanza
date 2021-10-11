@@ -42,7 +42,7 @@ export const TipRanksScreenRules = [
   new FilterRule('eps q/q >= 0%'),
 ];
 
-export const BargainCommonScreenRules = [new FilterRule('avg volume > 300k'), new FilterRule('market cap > 1b'), new FilterRule('trScore > 6')];
+export const BargainCommonScreenRules = [new FilterRule('avg volume > 300k'), new FilterRule('market cap > 10b'), new FilterRule('trScore > 6')];
 
 export const WeeklyTrendLongScreenRules = [...BargainCommonScreenRules, new FilterRule('emaWeekly5 >= emaWeekly20'), new FilterRule('emaWeekly20 >= emaWeekly40')];
 
