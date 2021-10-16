@@ -2,12 +2,17 @@ import { CSVHeaders } from '../const';
 import { writeAnalysisCSV } from '../utils';
 import { SimpleFilter } from '../analyze/simpleFilter';
 import {
-  CommonScreenRules,
+  BargainEMA200,
+  BargainLongTerm,
+  BargainShortTerm,
+  BargainTrUpLow,
+  BargainFarfetch,
+  FactsOutdated,
+  TrendShort,
+  TrendLong,
+  TrendWeeklyLong,
   StrenthScreenRules,
   TipRanksScreenRules,
-  ShortTermBargainScreenRules,
-  LongTermBargainScreenRules,
-  LongArrayScrrenRules,
   FundementalScreenRules,
   DividendScreenRules,
   descUp,
@@ -16,23 +21,15 @@ import {
   descTrUp,
   descDividend,
   cutOff,
-  FarfetchScreenRules,
   PEScreenRules,
   PEGScreenRules,
   ascPE,
   ascPeg,
   PositiveUpRules,
-  ShortArrayScrrenRules,
   TrScore6Rules,
-  OutdatedScreenRules,
-  WeeklyTrendLongScreenRules,
-  BargainLongTermScreenRules,
-  EMA200ScreenRules,
-  TrUpLowRules,
 } from './screenRules';
 import { PlungeFilter } from '../analyze/plungeFilter';
 import { SkyrocketFilter } from '../analyze/skyrocketFilter';
-import internal from 'stream';
 export * from './macdScreen';
 import { FilterRule } from '../analyze/simpleFilter';
 
@@ -62,27 +59,27 @@ export const bestScreen = async (rawMerged: any[]) => {
 };
 
 export const bargainScreen = async (rawMerged: any[]) => {
-  standardScreen('bargain-shortterm', rawMerged, descTrUp, 0, ...ShortTermBargainScreenRules);
-  standardScreen('bargain-longterm', rawMerged, descTrUp, 0, ...BargainLongTermScreenRules);
-  standardScreen('bargain-farfetch', rawMerged, descTrUp, 0, ...FarfetchScreenRules);
-  standardScreen('bargain-ema200', rawMerged, descTrUp, 0, ...EMA200ScreenRules);
-  standardScreen('bargain-upLow', rawMerged, descTrUp, 0, ...TrUpLowRules);
+  standardScreen('bargain-shortterm', rawMerged, descTrUp, 0, ...BargainShortTerm);
+  standardScreen('bargain-longterm', rawMerged, descTrUp, 0, ...BargainLongTerm);
+  standardScreen('bargain-farfetch', rawMerged, descTrUp, 0, ...BargainFarfetch);
+  standardScreen('bargain-ema200', rawMerged, descTrUp, 0, ...BargainEMA200);
+  standardScreen('bargain-upLow', rawMerged, descTrUp, 0, ...BargainTrUpLow);
 };
 
 export const trendScreen = async (rawMerged: any[]) => {
-  standardScreen('trend-long', rawMerged, descTrUp, 0, ...LongArrayScrrenRules);
-  standardScreen('trend-short', rawMerged, descTrUp, 0, ...ShortArrayScrrenRules);
-  standardScreen('trend-weekly-long', rawMerged, descTrUp, 0, ...WeeklyTrendLongScreenRules);
+  standardScreen('trend-long', rawMerged, descTrUp, 0, ...TrendLong);
+  standardScreen('trend-short', rawMerged, descTrUp, 0, ...TrendShort);
+  standardScreen('trend-weekly-long', rawMerged, descTrUp, 0, ...TrendWeeklyLong);
 };
 
 export const outdatedScreen = async (rawMerged: any[]) => {
-  standardScreen('facts-outdated', rawMerged, descTrUp, 0, ...OutdatedScreenRules);
+  standardScreen('facts-outdated', rawMerged, descTrUp, 0, ...FactsOutdated);
 };
 
 export const plungeScreen = async (rawMerged: any[], plungePct: number, withinDays: number) => {
   const filter = new PlungeFilter(withinDays, plungePct);
   const { accepted, rejected } = filter.matchAll(rawMerged);
-  const simpleFilter = new SimpleFilter(...CommonScreenRules, ...TrScore6Rules);
+  const simpleFilter = new SimpleFilter(...TrScore6Rules);
   const secondResult = simpleFilter.matchAll(accepted);
 
   // sort by desc strength
@@ -96,7 +93,7 @@ export const plungeScreen = async (rawMerged: any[], plungePct: number, withinDa
 export const skyrocketScreen = async (rawMerged: any[], rocketPct: number, withinDays: number) => {
   const filter = new SkyrocketFilter(withinDays, rocketPct);
   const { accepted, rejected } = filter.matchAll(rawMerged);
-  const simpleFilter = new SimpleFilter(...CommonScreenRules, ...TrScore6Rules);
+  const simpleFilter = new SimpleFilter(...TrScore6Rules);
   const secondResult = simpleFilter.matchAll(accepted);
 
   // sort by desc strength
