@@ -39,17 +39,21 @@ export const updateMorningStarRating = async () => {
       row['fair%'] = formatPercent((Number(row['Fair$']) - Number(data['closePrice'])) / Number(data['closePrice']));
     }
   }
+  let sorted = parsed.sort((a, b) => {
+    Number(a['Star']) > Number(b['Star'] ? 1 : Number(a['Star'].slice(-1)) > Number(b['Star'].slice(-1))) ? 1 : -1;
+  });
   const headers = [
     { id: 'H', title: 'H' },
     { id: 'Stock', title: 'Stock' },
+    { id: 'Star', title: 'Star' },
     { id: 'Moat', title: 'Moat' },
-    { id: 'Fair$', title: 'Fair$' },
     { id: 'Uncertainty', title: 'Uncertainty' },
     { id: 'Leadership', title: 'Leadership' },
+    { id: 'Fair$', title: 'Fair$' },
     { id: 'price', title: 'Price' },
     { id: 'fair%', title: 'Fair%' },
     { id: 'trUp%', title: 'TrUp%' },
     { id: 'mcap', title: 'MCap%' },
   ];
-  writeAnalysisCSV('morning-start.csv', headers, parsed);
+  writeAnalysisCSV('morning-start.csv', headers, sorted);
 };
