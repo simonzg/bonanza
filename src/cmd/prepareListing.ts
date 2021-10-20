@@ -10,16 +10,9 @@ import { writeListingJSON } from '../utils';
  * https://github.com/datasets/nyse-other-listings
  *
  */
-export const loadListingFromCSV = async (
-  filename: string,
-  symbolColName: string,
-  companyNameColName: string
-) => {
+export const loadListingFromCSV = async (filename: string, symbolColName: string, companyNameColName: string) => {
   return new Promise<string[]>((resolve, reject) => {
-    const file = fs.readFileSync(
-      path.join(__dirname, '..', '..', 'config', 'listing', filename),
-      'utf8'
-    );
+    const file = fs.readFileSync(path.join(__dirname, '..', '..', 'config', 'listing', filename), 'utf8');
     parse(file, {
       header: true,
       error: (err) => {
@@ -68,16 +61,8 @@ export const loadListingFromCSV = async (
 };
 
 (async () => {
-  const nasdaqSymbols = await loadListingFromCSV(
-    'nasdaq-listed.csv',
-    'Symbol',
-    'Company Name'
-  );
-  const nyseSymbols = await loadListingFromCSV(
-    'nyse-listed.csv',
-    'ACT Symbol',
-    'Company Name'
-  );
+  const nasdaqSymbols = await loadListingFromCSV('nasdaq-listed.csv', 'Symbol', 'Company Name');
+  const nyseSymbols = await loadListingFromCSV('nyse-listed.csv', 'ACT Symbol', 'Company Name');
   writeListingJSON('nasdaq.json', { symbols: nasdaqSymbols });
   writeListingJSON('nyse.json', { symbols: nyseSymbols });
 })();

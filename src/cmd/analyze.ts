@@ -6,6 +6,7 @@ import { watchlistTiming } from '../analyze/watchlistTiming';
 import { plungeScreen, skyrocketScreen, bestScreen, trendScreen, bargainScreen, macdScreen, outdatedScreen } from '../screen';
 import { sectorAnalyze } from '../analyze/sectorAnalyze';
 import { raw } from 'body-parser';
+import { updateMorningStarRating } from '../analyze/morningStar';
 
 (async () => {
   const symbols = loadAllSymbols();
@@ -33,4 +34,7 @@ import { raw } from 'body-parser';
   await writeFacts(Listing.Temporary);
   await writeFacts(Listing.Watchlist);
   await writeFacts(Listing.Sectors);
+
+  // update morning star ratings
+  await updateMorningStarRating();
 })();
