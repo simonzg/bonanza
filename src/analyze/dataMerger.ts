@@ -41,7 +41,24 @@ export const loadMergedData = (symbols: string[]) => {
       if (profileData) {
         industry = JSON.parse(profileData).finnhubIndustry;
       }
-      if (!dayIndicatorData || !candleData || !priceTargetData || !recommendData || !finvizData) {
+      if (!dayIndicatorData) {
+        console.log(`Missing day_indicator data for ${symbol}`);
+        continue;
+      }
+      if (!candleData) {
+        console.log(`Missing candle data for ${symbol}`);
+        continue;
+      }
+      if (!priceTargetData) {
+        console.log(`Missing price_target data for ${symbol}`);
+        continue;
+      }
+      if (!recommendData) {
+        console.log(`Missing recommend data for ${symbol}`);
+        continue;
+      }
+      if (!finvizData) {
+        console.log(`Missing finviz data for ${symbol}`);
         continue;
       }
 
@@ -55,6 +72,7 @@ export const loadMergedData = (symbols: string[]) => {
       const priceTarget = JSON.parse(priceTargetData);
 
       if (candle.c === undefined || priceTarget.targetHigh === undefined) {
+        console.log(`Missing candle data for ${symbol}`);
         continue;
       }
       // close price of last day
@@ -65,6 +83,7 @@ export const loadMergedData = (symbols: string[]) => {
       const targetMedian = priceTarget.targetMedian;
       const targetLow = priceTarget.targetLow;
       if (targetHigh === targetLow) {
+        console.log(`Only one target analyst for ${symbol}`);
         continue;
       }
 
