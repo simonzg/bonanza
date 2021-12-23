@@ -8,6 +8,7 @@ import * as nasdaq from '../config/listing/nasdaq.json';
 import * as portfolio from '../config/listing/portfolio.json';
 import * as watchlist from '../config/listing/watchlist.json';
 import * as sectors from '../config/listing/sectors.json';
+import * as temp from '../config/listing/temporary.json';
 
 export const loadSectorSymbols = (): string[] => {
   let symbols = [];
@@ -31,6 +32,10 @@ export const loadWatchlistSymbols = (): string[] => {
     }
   }
   return Object.keys(symbols);
+};
+
+export const loadTemporarySymbols = (): string[] => {
+  return temp.symbols;
 };
 
 export const loadSectorSymbolsWithSector = () => {
@@ -78,6 +83,9 @@ export const loadSymbolsByListing = (ex: Listing): string[] => {
       break;
     case Listing.All:
       symbols = loadAllSymbols();
+      break;
+    case Listing.Temporary:
+      symbols = loadTemporarySymbols();
       break;
   }
   const originLen = symbols.length;
