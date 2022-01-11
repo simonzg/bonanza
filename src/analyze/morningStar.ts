@@ -8,7 +8,7 @@ import { Listing } from '../const';
 
 export const loadMorningStars = async () => {
   return new Promise<any>((resolve, reject) => {
-    const file = fs.readFileSync(path.join(__dirname, '..', '..', 'config', 'morning-star-2021-10.csv'), 'utf8');
+    const file = fs.readFileSync(path.join(__dirname, '..', '..', 'config', 'morning-star-2022-1.csv'), 'utf8');
     parse(file, {
       header: true,
       complete: (result) => {
